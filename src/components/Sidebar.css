@@ -1,0 +1,89 @@
+.sidebar {
+  width: 260px;
+  border-right: 1px solid black;
+  height: 100%;
+  min-height: 100%;
+  overflow: hidden;
+  background-color: burlywood;
+  position: relative;
+  transition: margin-left 0.3s ease;
+}
+.sidebar-inner {
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
+  width: 100%;
+  background-color: blanchedalmond;
+}
+
+.sidebar-user-section {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.user-name-bg {
+  background: #cd5a91;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.user-name-first-letter {
+  font-weight: bold;
+  font-size: 20px;
+  text-align: center;
+  color: white;
+}
+.fold-btn {
+  all: unset;
+  cursor: pointer;
+  width: 40px;
+  height: 40px;
+  background-color: aliceblue;
+  border-radius: 50%;
+  text-align: center;
+}
+
+.subbar {
+  width: 15px;
+  height: 100%;
+  background-color: #dbdbdb;
+  position: absolute;
+  left: -45px;
+  z-index: 5;
+  transition: left 0.5s ease;
+}
+
+.subbar-btn {
+  position: absolute;
+  top: 20px;
+  left: 0px;
+  width: 30px;
+  height: 30px;
+  background-color: #dbdbdb;
+  cursor: pointer;
+  outline: none;
+  border: 1px solid black;
+  text-align: center;
+  border-radius: 50%;
+}
+
+.sidebar-folded {
+  margin-left: -260px;
+}
+
+.sidebar-unfolded {
+  margin-left: 0px;
+}
+
+.subbar-folded {
+  left: -45px;
+}
+
+.subbar-unfolded {
+  left: 0px;
+}
