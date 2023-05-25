@@ -1,0 +1,17 @@
+.kanban {
+  /* width: 100%; */
+  width: fit-content;
+  height: 100%;
+  background-color: antiquewhite;
+  flex-grow: 1;
+}
+
+.kanban-inner {
+  padding: 30px 20px;
+  display: flex;
+}
+
+.hovered {
+  border: 1px dashed grey;
+  padding: 2px;
+}

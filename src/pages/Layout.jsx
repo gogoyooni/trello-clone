@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Link, Outlet } from "react-router-dom";
 import Content from "../components/Content";
 import Sidebar from "../components/Sidebar";
+import Board from "./Board";
 
 export default function Layout() {
   const [isSidebarFolded, setIsSidebarFolded] = useState(false);
@@ -19,7 +20,7 @@ export default function Layout() {
         </ul>
       </nav>
 
-      <hr />
+      {/* <hr /> */}
 
       {/* An <Outlet> renders whatever child route is currently active,
           so you can think about this <Outlet> as a placeholder for
@@ -37,9 +38,9 @@ export default function Layout() {
           isSidebarFolded={isSidebarFolded}
           setIsSidebarFolded={setIsSidebarFolded}
         />
-        <Content isSidebarFolded={isSidebarFolded} />
+        {/* <Content isSidebarFolded={isSidebarFolded} /> */}
+        <Outlet />
       </div>
-      {/* <Outlet /> */}
     </div>
   );
 }

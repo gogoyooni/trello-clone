@@ -8,20 +8,26 @@ import {
 } from "react-router-dom";
 import Home from "../src/pages/Home";
 import Layout from "../src/pages/Layout";
+import Board from "./pages/Board";
+import Content from "./components/Content";
 
 export default function App() {
   return (
-    <div style={{ width: "100%", height: "100%" }}>
+    <div id="root-container">
       <Router>
         <Routes>
+          <Route index element={<Home />} />
           <Route path="/" element={<Layout />}>
-            <Route index element={<Home />} />
+            <Route path="/b" element={<Content />} />
+            <Route path="/b/:id/" element={<Board />} />
+
             {/* <Route path="about" element={<About />} /> */}
             {/* Using path="*"" means "match anything", so this route
                 acts like a catch-all for URLs that we don't have explicit
                 routes for. */}
             {/* <Route path="*" element={<NoMatch />} /> */}
           </Route>
+          {/* <Route path="/b/:id" element={<Board />} /> */}
         </Routes>
       </Router>
     </div>

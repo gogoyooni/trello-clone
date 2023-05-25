@@ -1,0 +1,71 @@
+.add-card-list {
+  box-sizing: border-box;
+  background-color: #00000014;
+  border-radius: 12px;
+  /* padding: 8px; */
+  /* height: auto; */
+  height: 32px;
+  min-height: 32px;
+  transition: background 85ms ease-in,
+    opacity 40ms ease-in border-color 85ms ease-in;
+  width: 272px;
+  margin: 0 4px;
+  cursor: pointer;
+}
+.placeholder {
+  cursor: pointer;
+}
+.placeholder-inner {
+  display: flex;
+  padding: 6px 8px;
+  align-items: center;
+  transition: color 85ms ease-in;
+}
+.add-card-list-controls-wrapper {
+  box-sizing: border-box;
+  width: 272px;
+  display: none;
+  background-color: #f7f8f9;
+  border-radius: 12px;
+  padding: 8px;
+}
+.show {
+  display: block;
+}
+
+.hide {
+  display: none;
+}
+
+.list-name-input {
+  width: 100%;
+  font-weight: 600;
+  height: 32px;
+  background-color: #ffffff;
+  transition: margin 85ms ease-in, background 85ms ease-in;
+  /* box-shadow: inset 0 0 0 2px #0079bf; */
+}
+.list-name-input:focus {
+  box-shadow: inset 0 0 0 2px #0079bf;
+}
+
+.add-card-list-controls {
+  display: flex;
+  align-items: center;
+}
+
+.add-card-list-btn {
+  cursor: pointer;
+  border-radius: 3px;
+  font-weight: 400;
+  background-color: #0c66e4;
+  padding: 6px 12px;
+  color: #fff;
+  margin-right: 10px;
+}
+
+.remove-card-list-btn {
+  cursor: pointer;
+  background-color: transparent;
+  font-size: 24px;
+}

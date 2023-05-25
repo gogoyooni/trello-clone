@@ -1,0 +1,21 @@
+.card {
+  max-width: 262px;
+  min-height: 20px;
+  cursor: pointer;
+  /* padding: 14px 8px; */
+  color: #172b4d;
+  cursor: pointer;
+
+  padding: 5px 8px;
+  /* box-shadow: 0 1px 0 #091e4240; */
+}
+.card-title {
+  padding: 8px 8px 4px 12px;
+  word-wrap: break-word;
+  overflow: hidden;
+  border: 1px solid black;
+  box-shadow: 0 1px 0 #091e4240;
+  border-radius: 3px;
+  height: 30px;
+  /* text-align: center; */
+}
