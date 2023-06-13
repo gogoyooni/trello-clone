@@ -10,6 +10,8 @@ import Home from "../src/pages/Home";
 import Layout from "../src/pages/Layout";
 import Board from "./pages/Board";
 import Content from "./components/Content";
+import Test from "./pages/Test";
+import Protected from "./components/Protected";
 
 export default function App() {
   return (
@@ -18,8 +20,40 @@ export default function App() {
         <Routes>
           <Route index element={<Home />} />
           <Route path="/" element={<Layout />}>
-            <Route path="/b" element={<Content />} />
-            <Route path="/b/:id/" element={<Board />} />
+            {/* <Route path="/w" element={<Test />} /> */}
+            {/* <Route path="/protected/:id" element={<Protected />} /> */}
+            <Route
+              path="/u/:username"
+              element={
+                <Protected>
+                  <Content />
+                </Protected>
+              }
+            />
+            <Route
+              path="/w/:id"
+              element={
+                <Protected>
+                  <Content />
+                </Protected>
+              }
+            />
+            <Route
+              path="/w/:id/members"
+              element={
+                <Protected>
+                  <Content />
+                </Protected>
+              }
+            />
+            <Route
+              path="/w/:id/b/:boardName"
+              element={
+                <Protected>
+                  <Board />
+                </Protected>
+              }
+            />
 
             {/* <Route path="about" element={<About />} /> */}
             {/* Using path="*"" means "match anything", so this route

@@ -1,0 +1,206 @@
+#home-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background-color: #eff3f8;
+}
+
+#home-inner {
+  /* position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%); */
+  display: flex;
+  width: 1200px;
+  max-width: 1200px;
+  height: 850px;
+  /* background-color: aqua; */
+  border-radius: 5px;
+  margin: 45px auto;
+}
+#left {
+  width: 50%;
+  height: 100%;
+}
+#ad-container {
+  position: relative;
+  height: 100%;
+}
+
+#ad-bg {
+  width: 100%;
+  height: 100%;
+  background-image: url("../../assets/home-left-img2.jpg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  filter: blur(5px);
+  -webkit-filter: blur(5px);
+}
+
+#ad-inner {
+  position: absolute;
+  color: #ffffff;
+  width: 450px;
+  height: 600px;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  background-color: rgba(255, 255, 255, 0.3);
+}
+
+#ad-btn-text {
+  margin-top: 150px;
+  padding: 50px;
+}
+
+#ad-heading {
+  font-size: 50px;
+  font-weight: 500;
+  line-height: 55px;
+}
+
+#colored {
+  color: black;
+}
+
+#add-subheading {
+  margin-top: 15px;
+  font-size: 18px;
+}
+
+#right {
+  display: flex;
+  width: 50%;
+  height: 100%;
+  background-color: #ffffff;
+  overflow: hidden;
+}
+
+.form-inner {
+  padding: 50px;
+  margin: 200px auto;
+}
+
+.welcome-msg {
+  font-size: 25px;
+}
+.instruction-msg {
+  margin-top: 5px;
+  color: #8d8d91;
+}
+
+.form-wrapper {
+  width: 400px;
+  margin-top: 30px;
+}
+
+.login-form,
+.signup-form,
+.workspace-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.login-username-input,
+.login-password-input,
+.signup-username-input,
+.signup-password-input,
+.workspace-input {
+  width: 400px;
+  border: 1px solid #cdcdd5;
+}
+
+.username-input-wrapper,
+.password-input-wrapper,
+.workspace-input-wrapper {
+  width: 400px;
+  display: flex;
+  flex-direction: column;
+}
+
+.username-input-wrapper > label,
+.password-input-wrapper > label,
+.workspace-input-wrapper > label {
+  margin-bottom: 5px;
+}
+
+.password-input-wrapper {
+  margin-top: 20px;
+}
+
+#forgot-pw {
+  margin-top: 15px;
+  text-align: right;
+  color: #0079bf;
+}
+
+#login {
+  /* margin-top: 15px; */
+  margin-top: 25px;
+  padding: 10px 15px;
+  border-radius: 4px;
+  cursor: pointer;
+  background-color: #b0daff;
+  color: #ffffff;
+  font-size: 17px;
+}
+.form-header {
+  display: flex;
+  align-items: center;
+}
+.form-header > span {
+  margin-left: 13px;
+  line-height: 38px;
+}
+
+#signup,
+#next,
+#back {
+  margin-top: 25px;
+  text-align: center;
+}
+.arrow {
+  width: auto;
+  height: 25px;
+  margin-left: 5px;
+}
+
+#next {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#signup-colored,
+#workspace-colored,
+#login-colored {
+  color: #0079bf;
+  cursor: pointer;
+}
+
+#workspace-colored {
+  width: auto;
+  height: 25px;
+}
+
+.signup-wrapper,
+.workspace-name-wrapper {
+  margin-left: 150px;
+}
+
+.confirm,
+.create {
+  margin-top: 25px;
+  padding: 10px 15px;
+  border-radius: 4px;
+  cursor: pointer;
+  background-color: #b0daff;
+  color: #ffffff;
+  font-size: 17px;
+  text-align: center;
+}
+
+.Toastify__toast-container {
+  text-align: center;
+}
