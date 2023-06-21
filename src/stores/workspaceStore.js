@@ -1,6 +1,7 @@
 import { create } from "zustand";
 import { devtools } from "zustand/middleware";
 import axios from "axios";
+import workspaceService from "../features/workspace/workspaceService";
 
 const BASE_URL = "http://localhost:3000";
 
@@ -32,22 +33,23 @@ const useWorkspaceStore = create(
           // console.log(e.status, e.response);
         });
     },
-    getWorkspaceInfo: async () => {
-      const { _id } = userData;
-      return axios
-        .post(`${BASE_URL}/api/user`, {
-          data: {
-            signupUsername,
-            signupPassword,
-          },
-        })
-        .then((data) => {
-          return data;
-        })
-        .catch((e) => {
-          return e.response;
-          // console.log(e.status, e.response);
-        });
+    getWorkspaceInfo: async (workspaceId) => {
+      workspaceService._getWorkspace();
+      // const { _id } = userData;
+      // return axios
+      //   .post(`${BASE_URL}/api/user`, {
+      //     data: {
+      //       signupUsername,
+      //       signupPassword,
+      //     },
+      //   })
+      //   .then((data) => {
+      //     return data;
+      //   })
+      //   .catch((e) => {
+      //     return e.response;
+      //     // console.log(e.status, e.response);
+      //   });
     },
     login: async (userData) => {
       const { loginUsername, loginPassword } = userData;

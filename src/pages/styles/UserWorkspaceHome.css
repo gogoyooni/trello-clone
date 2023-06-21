@@ -1,0 +1,15 @@
+.user-workspace-home__boards-wrapper {
+  margin: 40px 16px 0;
+  max-width: 825px;
+  min-width: 288px;
+  width: 100%;
+}
+
+hr {
+  background-color: #e1e3e7;
+  border: 0;
+  height: 1px;
+  margin: 16px 0;
+  padding: 0;
+  width: 100%;
+}

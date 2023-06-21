@@ -18,19 +18,19 @@ const useUserStore = create(
       (set, get) => ({
         _id: "",
         username: "",
-        signupUsername: "",
+        // signupUsername: "",
         // password: "",
-        isSignedUp: false,
+        // isSignedUp: false,
         isLoggedIn: false,
         setId: (id) => {
           set((state) => ({ _id: id }));
         },
-        setIsSignedUp: () => {
-          set((state) => ({ isSignedUp: !state.isSignedUp }));
-        },
-        setSignupUsername: (username) => {
-          set((state) => ({ signupUsername: username }));
-        },
+        // setIsSignedUp: () => {
+        //   set((state) => ({ isSignedUp: !state.isSignedUp }));
+        // },
+        // setSignupUsername: (username) => {
+        //   set((state) => ({ signupUsername: username }));
+        // },
         setIsLoggedIn: () =>
           set((state) => ({ isLoggedIn: !state.isLoggedIn })),
         setUsername: (username) => set((state) => ({ username: username })),
@@ -55,10 +55,11 @@ const useUserStore = create(
               console.log("data in signup: ", data);
               // to check if the signd up user who makes his/her workspace
               set((state) => ({
-                signupUsername: data.data.username,
+                // signupUsername: data.data.username,
                 _id: data.data._id,
                 isLoggedIn: true,
-                isSignedUp: true,
+                username: signupUsername,
+                // isSignedUp: true,
                 accessToken: data.data.accessToken,
               }));
               // get().setSignupUsername(data.data.username);
@@ -122,6 +123,26 @@ const useUserStore = create(
           return workspaceService._createWorkspace(
             `/api/user/${id}/workspace`,
             { workspaceName },
+            token
+          );
+        },
+        getWorkspace: async (workspaceId) => {
+          const id = get()._id;
+          const token = get().accessToken;
+
+          return await workspaceService._getWorkspace(
+            `/api/user/${id}/workspace/${workspaceId}`,
+            {},
+            token
+          );
+        },
+        getWorkspaces: async () => {
+          const id = get()._id;
+          const token = get().accessToken;
+
+          return workspaceService._getWorkspace(
+            `/api/user/${id}/workspaces`,
+            {},
             token
           );
         },

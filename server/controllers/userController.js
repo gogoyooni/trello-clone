@@ -27,14 +27,14 @@ const signupUser = asyncHandler(async (req, res) => {
   const user = await User.create({
     username: signupUsername,
     password: hashedPassword,
-    workspaces: [
-      {
-        name: "",
-        website: "",
-        description: "",
-        isOwner: false,
-      },
-    ],
+    // workspaces: [
+    //   {
+    //     name: "",
+    //     website: "",
+    //     description: "",
+    //     isOwner: false,
+    //   },
+    // ],
   });
 
   console.log("user::", user);
@@ -70,7 +70,10 @@ const login = asyncHandler(async (req, res) => {
   const { loginUsername, loginPassword } = req.body.data;
 
   // Check for user email
-  const user = await User.findOne({ username: loginUsername });
+  const user = await User.findOne({ username: loginUsername }).populate(
+    "workspaces"
+  );
+  console.log("로그인 후에 workspaces Populate 했을때:", user);
 
   if (!user) {
     return res.status(404).json({ message: "This user doens't exist" });

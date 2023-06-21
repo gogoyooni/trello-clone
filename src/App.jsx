@@ -10,8 +10,10 @@ import Home from "../src/pages/Home";
 import Layout from "../src/pages/Layout";
 import Board from "./pages/Board";
 import Content from "./components/Content";
-import Test from "./pages/Test";
+import Test from "./pages/UserWorkspaceHome";
 import Protected from "./components/Protected";
+import UserWorkspaceHome from "./pages/UserWorkspaceHome";
+import UserBoards from "./pages/UserBoards";
 
 export default function App() {
   return (
@@ -23,7 +25,15 @@ export default function App() {
             {/* <Route path="/w" element={<Test />} /> */}
             {/* <Route path="/protected/:id" element={<Protected />} /> */}
             <Route
-              path="/u/:username"
+              path="/u/:username/boards"
+              element={
+                <Protected>
+                  <UserBoards />
+                </Protected>
+              }
+            />
+            <Route
+              path="/w/:username"
               element={
                 <Protected>
                   <Content />
@@ -31,7 +41,15 @@ export default function App() {
               }
             />
             <Route
-              path="/w/:id"
+              path="/w/:workspaceId/home"
+              element={
+                <Protected>
+                  <UserWorkspaceHome />
+                </Protected>
+              }
+            />
+            <Route
+              path="/w/:username/members"
               element={
                 <Protected>
                   <Content />
@@ -39,15 +57,7 @@ export default function App() {
               }
             />
             <Route
-              path="/w/:id/members"
-              element={
-                <Protected>
-                  <Content />
-                </Protected>
-              }
-            />
-            <Route
-              path="/w/:id/b/:boardName"
+              path="/w/:username/b/:boardName"
               element={
                 <Protected>
                   <Board />

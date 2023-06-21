@@ -29,11 +29,11 @@ export default function Content() {
   // console.log("데이터: ", 데이터);
   const navigate = useNavigate();
   const refresh = useRefreshToken();
-  const { id } = useParams();
+  const { username } = useParams();
   const isSignedup = useUserStore((state) => state.isSignedup);
   const isLoggedIn = useUserStore((state) => state.isLoggedIn);
   const signupUsername = useUserStore((state) => state.signupUsername);
-  const username = useUserStore((state) => state.username);
+  // const username = useUserStore((state) => state.username);
 
   // console.log("isSignedup :", isSignedup, "isLoggedIn:", isLoggedIn);
   console.log("username : ", username);

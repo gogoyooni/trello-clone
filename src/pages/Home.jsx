@@ -24,8 +24,12 @@ export default function Home() {
   const [loginPassword, setLoginPassword] = useState("");
   const loginUsernameRef = useRef();
 
+  // @desc _id
+  // const _id = useUserStore((state) => state._id);
+
   const [isLoading, setIsLoading] = useState(true);
 
+  const [isSignedUp, setIsSignedUp] = useState(false);
   const [signupisLoading, setSignupIsLoading] = useState(false);
   const [signupUsername, setSingupUsername] = useState("");
   const [signupPassword, setSignupPassword] = useState("");
@@ -51,6 +55,7 @@ export default function Home() {
   // const setPassword = useUserStore((state) => state.setPassword);
   const login = useUserStore((state) => state.login);
 
+  const accessToken = useUserStore((state) => state.accessToken);
   const setAccessToken = useUserStore((state) => state.setAccessToken);
 
   // @ user signup - username, password input
@@ -59,13 +64,13 @@ export default function Home() {
   // const setSignupPW = useUserStore((state) => state.setSignupPW);
   const signup = useUserStore((state) => state.signup);
   // before making a workspace name, check if the user has signed up
-  const isSignedUp = useUserStore((state) => state.isSignedUp);
-  const setIsSignedUp = useUserStore((state) => state.setIsSignedUp);
+  // const isSignedUp = useUserStore((state) => state.isSignedUp);
+  // const setIsSignedUp = useUserStore((state) => state.setIsSignedUp);
 
-  const globalSignupUsername = useUserStore((state) => state.signupUsername);
-  const setGlobalSignupUsername = useUserStore(
-    (state) => state.setSignupUsername
-  );
+  // const globalSignupUsername = useUserStore((state) => state.signupUsername);
+  // const setGlobalSignupUsername = useUserStore(
+  //   (state) => state.setSignupUsername
+  // );
 
   //navigate user according to username
   const navigate = useNavigate();
@@ -101,7 +106,8 @@ export default function Home() {
       setTimeout(() => {
         // alert(username);
         // console.log(username);
-        navigate(`/w/${loginUsername}`);
+        // navigate(`/w/${loginUsername}`); 이게 원래 하던대로 하던거
+        navigate(`/u/${loginUsername}/boards`);
         // redirect(`/w/${username}`);
         // navigate("/w", {
         //   state: {
@@ -162,8 +168,9 @@ export default function Home() {
 
     if (response?.status === 201) {
       setSignupIsLoading(false);
+      setIsSignedUp(true);
       // I can use this signupusername when a user signs up and make a workspace name
-      setGlobalSignupUsername(globalSignupUsername);
+      // setGlobalSignupUsername(globalSignupUsername);
       setTimeout(() => {
         toast.success("👏 Welcome! Your account has been created! ", {
           position: "top-center",
@@ -272,9 +279,11 @@ export default function Home() {
 
   const onCreateWorkspace = (e) => {
     e.preventDefault();
+
     if (isSignedUp) {
+      // _createWorkspace(`/api/user/${_id}`, workspaceName, accessToken);
       createWorkspace(workspaceName);
-      navigate(`/w/${globalSignupUsername}`);
+      navigate(`/u/${username}/boards`); // 이거 어떻게 할까 음..
     } else {
       alert("you haven't signed up yet. Please sign up first!");
     }

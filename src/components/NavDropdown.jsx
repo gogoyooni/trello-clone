@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 
 export default function NavDropdown({
   children,
@@ -8,20 +8,19 @@ export default function NavDropdown({
 }) {
   const dropDownRef = useRef(null);
 
-  //   useEffect(() => {
-  // console.log(dropDownRef);
-  //     const handleClickOutside = (event) => {
-  //       if (dropDownRef.current && !dropDownRef.current.contains(event.target)) {
-  //         onClickOutside && onClickOutside();
-  //       }
-  //     };
-  //     document.addEventListener("click", handleClickOutside, true);
-  //     return () => {
-  //       document.removeEventListener("click", handleClickOutside, true);
-  //     };
-  //   }, []);
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (dropDownRef.current && !dropDownRef.current.contains(event.target)) {
+        onClickOutside && onClickOutside();
+      }
+    };
+    document.addEventListener("click", handleClickOutside, true);
+    return () => {
+      document.removeEventListener("click", handleClickOutside, true);
+    };
+  }, []);
 
-  //   if (!isOpen) return null;
+  if (!isOpen) return null;
 
   return (
     <>
