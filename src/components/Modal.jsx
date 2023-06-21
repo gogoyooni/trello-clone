@@ -21,17 +21,20 @@ export default function Modal({ closeModal }) {
     setWorkspaceDesc(e.target.value);
   };
 
-  const createWorkspace = async (token) => {
+  const createWorkspace = async (e, token) => {
+    e.preventDefault();
     setIsLoading(true);
     await workspaceService._createWorkspace(
       `/api/user/${id}/workspace`,
       {
-        name: workspaceName,
+        workspaceName: workspaceName,
+        workspaceDescription: workspaceDesc,
       },
       token
     );
-
-    setIsLoading(false);
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 1200);
   };
 
   console.log("workspaceName:", workspaceName);
@@ -55,7 +58,10 @@ export default function Modal({ closeModal }) {
               boards in one location.
             </span>
           </div>
-          <div className="modal-form__container">
+          <form
+            className="modal-form__container"
+            onSubmit={(e) => createWorkspace(e, token)}
+          >
             <div className="workspace-name-input__wrapper">
               <label className="workspace-label">Workspace name</label>
               <input
@@ -82,8 +88,10 @@ export default function Modal({ closeModal }) {
             </div>
             <div className="workspace-submit-btn__wrapper">
               <button
-                className="workspace-submit-btn"
-                onClick={() => createWorkspace(token)}
+                className={`workspace-submit-btn ${
+                  workspaceName.length > 0 && "available"
+                } ${isLoading ? "sending" : ""}`}
+                // onClick={() => createWorkspace(token)}
               >
                 {isLoading ? (
                   <PulseLoader color="#bcbdbd" />
@@ -92,7 +100,7 @@ export default function Modal({ closeModal }) {
                 )}
               </button>
             </div>
-          </div>
+          </form>
         </div>
         <div className="modal-right__wrapper">
           <div className="modal-right__bg"></div>

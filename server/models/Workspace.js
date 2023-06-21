@@ -5,7 +5,7 @@ const workspaceSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: "User",
   },
-  name: { type: String },
+  name: { type: String, required: true },
   website: { type: String },
   description: { type: String },
   isOwner: { type: Boolean }, // 이걸로 내가 초대되거나 소유하고 있는 워크스페이스에서 나의 역할 확인가능(주인 or 멤버) - 내가 초대된 워크스페이스에선 주인이 될 수 없음

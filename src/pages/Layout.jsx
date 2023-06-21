@@ -63,6 +63,7 @@ function Layout() {
     fetchWorkspaces();
   }, []);
 
+  console.log("workspaces inside Layout ---", workspaces);
   return (
     <div className="main-content__wrapper">
       {isModalVisible ? <Modal closeModal={setIsModalVisible} /> : null}

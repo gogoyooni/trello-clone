@@ -63,6 +63,10 @@
   background-repeat: no-repeat;
   background-position: center;
 }
+
+.workspace-input {
+  width: 100%;
+}
 .workspace-input:hover {
   background-color: #f7f8f9;
 }
@@ -105,9 +109,24 @@ textarea {
   width: 100%;
   background-color: #f8f9fa;
   cursor: not-allowed;
+  pointer-events: none;
   margin-top: 12px;
   color: #bec2ca;
   padding: 13px;
   display: flex;
   justify-content: center;
+  border-radius: 3px;
+}
+
+.available {
+  background-color: #0b66e4;
+  color: #fff;
+  cursor: pointer;
+  pointer-events: all;
+}
+
+.sending {
+  background-color: #fff;
+  cursor: not-allowed;
+  pointer-events: none;
 }

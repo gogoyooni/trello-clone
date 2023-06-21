@@ -29,11 +29,7 @@ const getWorkspace = asyncHandler(async (req, res) => {
         const workspace = data.workspaces.find((item) => {
           return item._id.toString() === workspaceId;
         });
-        // console.log(workspace);
-        // const workspace = data.workspaces.find(
-        //   (workspace) => workspace._id === workspaceId
-        // );
-        // console.log("worksapce - getWorkspace ::", workspace);
+
         return res.status(200).json({ workspace });
       });
   }
@@ -88,7 +84,10 @@ const createWorkspace = asyncHandler(async (req, res) => {
   console.log("req.params inside createWorkspace:", req.params);
   const { id } = req.params;
   // console.log("id::", id);
-  const { workspaceName, workspaceDesc } = req.body;
+  console.log("req.body:::::", req.body);
+  const { workspaceName, workspaceDescription } = req.body;
+  if (!workspaceName)
+    return res.status(404).json({ message: "Workspace name is required" });
 
   // console.log("workspace name:: ", workspaceName);
   // Check if user exists
@@ -100,41 +99,44 @@ const createWorkspace = asyncHandler(async (req, res) => {
   if (!user) {
     return res.status(404).json({ message: "This user doesn't exist" });
   }
-  const workspace = await Workspace.findOne({ name: workspaceName });
+  // const workspace = await Workspace.findOne({ name: workspaceName });
 
-  if (workspace) {
-    return res
-      .status(404)
-      .json({ message: "This workspace name is already taken" });
-  } else {
-    const workspaceMade = await Workspace.create({
-      user: user._id,
-      name: workspaceName,
-      website: "",
-      description: workspaceDesc ? workspaceDesc : "",
-      isOwner: true,
-      team: [
-        {
-          memberId: user._id,
-          isAdmin: true,
-        },
-      ],
-    });
-
-    console.log("workspaceMade: ", workspaceMade);
-
-    await User.findOneAndUpdate(
-      { _id: user._id },
+  // if (workspace) {
+  //   return res
+  //     .status(404)
+  //     .json({ message: "This workspace name is already taken" });
+  // } else {
+  const workspaceMade = await Workspace.create({
+    user: user._id,
+    name: workspaceName,
+    website: "",
+    description: workspaceDescription ? workspaceDescription : "",
+    isOwner: true,
+    team: [
       {
-        workspaces: workspaceMade._id,
-      }
-    );
+        memberId: user._id,
+        isAdmin: true,
+      },
+    ],
+  });
 
-    //
-    return res
-      .status(200)
-      .json({ message: "Successfuly created your workspace" });
-  }
+  user.workspaces.push(workspaceMade._id);
+  user.save();
+
+  // const addedWorkspaceArr = workspaces.push(workspaceMade._id.toString());
+  // console.log("addedWorkspaceArr: ", addedWorkspaceArr);
+
+  // await User.findOneAndUpdate(
+  //   { _id: user._id },
+  //   {
+  //     workspaces: addedWorkspaceArr,
+  //   }
+  // );
+
+  return res
+    .status(200)
+    .json({ message: "Successfuly created your workspace" });
+  // }
 });
 
 // @desc Get user data
