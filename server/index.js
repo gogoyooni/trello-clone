@@ -3,31 +3,22 @@ const mongoose = require("mongoose");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 const cors = require("cors");
-const User = require("./models/User");
-
 const { protect } = require("./middleware/authMiddleware");
+
+require("dotenv").config();
 
 const app = express();
 app.use(cors());
-
-require("dotenv").config();
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 // app.use(cookieParser());
 
-// mongoose.connect(process.env.DATABASE_URL{
-//   console.log("mondogDB connected");
-// });
-
 mongoose.connect(process.env.DATABASE_URL);
 
 app.use("/api/auth/users", require("./routes/userRoutes"));
 app.use("/api/user", require("./routes/workspaceRoutes"));
-
-/*
-
-*/
+// app.use("/api/user", require())
 
 app.get("/", async (req, res) => {
   // res.send("root route");
@@ -133,11 +124,6 @@ app.post("/api/auth/login", async (req, res) => {
 
     const user = await User.findOne({ username: loginUsername });
     // console.log("api/auth/login- userFound", user);
-    // const user = await prisma.user.findUnique({
-    //   where: {
-    //     username,
-    //   },
-    // });
 
     // console.log(user);
     // return res.status(200).json({ message: "same username exists!" });
@@ -200,11 +186,6 @@ app.get("/api/auth/refresh", async (req, res) => {
       try {
         if (error) return res.status(403).json({ message: "Forbidden" });
 
-        // const foundUser = await prisma.user.findFirst({
-        //   where: {
-        //     username: foundUser.username,
-        //   },
-        // });
         const User = require("./models/User");
 
         const foundUser = await User.findOne({

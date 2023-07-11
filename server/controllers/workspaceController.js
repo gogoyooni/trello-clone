@@ -3,6 +3,8 @@ const bcrypt = require("bcrypt");
 const asyncHandler = require("express-async-handler");
 const User = require("../models/User");
 const Workspace = require("../models/Workspace");
+const Board = require("../models/Board");
+const Task = require("../models/Task");
 
 // @desc User gets a single workspace (when signing up)
 // @route GET /api/users/:id/workspace/:workspaceId
@@ -49,7 +51,8 @@ const getWorkspace = asyncHandler(async (req, res) => {
 const getWorkspaces = asyncHandler(async (req, res) => {
   // console.log("req.params:", req.params);
   const { id } = req.params;
-  // const { workspaceName } = req.body;
+
+  console.log("id:::::::::::::::::,", id);
 
   // console.log("workspace name:: ", workspaceName);
   // Check if user exists
@@ -61,9 +64,13 @@ const getWorkspaces = asyncHandler(async (req, res) => {
     return res.status(404).json({ message: "This user doesn't exist" });
   } else {
     await User.findById({ _id: id })
+      .lean()
       .populate("workspaces")
       .then((data) => {
+        console.log("data::", data);
+        // const testData = data.workspaces;
         return res.status(200).json({ workspaces: data.workspaces });
+        // 오리지널;
       });
   }
 
@@ -112,6 +119,7 @@ const createWorkspace = asyncHandler(async (req, res) => {
     website: "",
     description: workspaceDescription ? workspaceDescription : "",
     isOwner: true,
+    boards: [],
     team: [
       {
         memberId: user._id,

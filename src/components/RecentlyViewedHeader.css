@@ -1,0 +1,13 @@
+.recenty-viewed__header {
+  display: flex;
+  align-items: center;
+}
+
+.recently-viewed__icon {
+  width: 32px;
+  height: auto;
+  margin-right: 10px;
+}
+.recently-viewed__title {
+  font-weight: 500;
+}

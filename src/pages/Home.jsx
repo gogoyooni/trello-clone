@@ -1,13 +1,17 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState, lazy } from "react";
 import { Link, redirect, useNavigate } from "react-router-dom";
 import { useAnimate, animate } from "framer-motion";
 import useUserStore from "../store";
+import useTestStore from "../stores/workspaceStore";
+
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { PulseLoader } from "react-spinners";
 import { MdOutlineArrowForward } from "react-icons/md";
 
 import useRefreshToken from "../hooks/useRefreshtoken";
+import { saveUserInfo, checkUserHasLoggedIn } from "../utils/workspace.js";
+
 // import { _createWorkspace } from "../features/workspace/workspaceService";
 
 import "./styles/Home.css";
@@ -27,7 +31,7 @@ export default function Home() {
   // @desc _id
   // const _id = useUserStore((state) => state._id);
 
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
 
   const [isSignedUp, setIsSignedUp] = useState(false);
   const [signupisLoading, setSignupIsLoading] = useState(false);
@@ -71,29 +75,55 @@ export default function Home() {
   // const setGlobalSignupUsername = useUserStore(
   //   (state) => state.setSignupUsername
   // );
+  const initializeLocalStorage = useUserStore(
+    (state) => state.initializeLocalStorage
+  );
+
+  const checkUserHasLoggedIn = useUserStore(
+    (state) => state.checkUserHasLoggedIn
+  );
+
+  // const getStorage = useTestStore((state) => state.getStorage);
 
   //navigate user according to username
   const navigate = useNavigate();
 
   useEffect(() => {
+    // initializeLocalStorage();
     loginUsernameRef.current.focus();
+    // getStorage();
   }, []);
 
   const onLogin = async (e) => {
     // alert("click");
     e.preventDefault();
-
+    setIsLoading(true);
     // try {
     const response = await login({ loginUsername, loginPassword });
+
     console.log("response:", response);
 
     if (response.status === 200) {
       // setUsername(loginUsername);
       // setPassword(loginPassword);
       // console.log(20000);
+      // async () => await saveUserInfo(response);
+      // () => checkUserHasLoggedIn(loginUsername);
+      // console.log("localStorage", JSON.parse(localStorage.getItem("users")));
+      // if (localStorage.getItem("users") !== null) {
+      //   const users = JSON.parse(localStorage.getItem("users"));
+      //   const userIndex = users.findIndex((user) => user.username === username);
+      //   if (userIndex > -1) {
+      //     users[userIndex].userIndex = userIndex;
+      //     localStorage.setItem("users", JSON.stringify(users));
+      //   }
+      // }
+      setIsLoading(false);
+
+      // saveUserInfo(response);
       toast.success("🦄 Logged in successfully", {
         position: "top-center",
-        autoClose: 2500,
+        autoClose: 1500,
         hideProgressBar: false,
         closeOnClick: true,
         pauseOnHover: true,
@@ -114,9 +144,10 @@ export default function Home() {
         //     userId: username,
         //   },
         // });
-      }, 3000);
+      }, 1500);
     } else if (response?.status === 500) {
       // setMessage("No Response. Try again soon");
+      setIsLoading(false);
       toast.error(`😓 No Response. Try again soon`, {
         position: "top-center",
         autoClose: 5000,
@@ -129,6 +160,7 @@ export default function Home() {
       });
     } else if (response?.status === 401) {
       // setMessage("The username doesn't exist");
+      setIsLoading(false);
       toast.info(`🤔 Password is not correct`, {
         position: "top-center",
         autoClose: 5000,
@@ -141,6 +173,7 @@ export default function Home() {
       });
     } else if (response?.status === 404) {
       // setMessage("The username doesn't exist");
+      setIsLoading(false);
       toast.info(`🤔 The username doesn't exist`, {
         position: "top-center",
         autoClose: 5000,
@@ -390,8 +423,8 @@ export default function Home() {
                 {/* <div id="forgot-pw">
                   <Link to={"/"}>Forgot password?</Link>
                 </div> */}
-                <button id="login" type="submit">
-                  Login
+                <button id="login" type="submit" disabled={isLoading}>
+                  {isLoading ? <PulseLoader color="#fff" /> : "Login"}
                 </button>
               </form>
               <div id="signup">

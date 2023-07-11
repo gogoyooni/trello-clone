@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { devtools } from "zustand/middleware";
+import { devtools, persist } from "zustand/middleware";
 import axios from "axios";
 import workspaceService from "../features/workspace/workspaceService";
 
@@ -77,6 +77,9 @@ const useWorkspaceStore = create(
     createWorkspace: async (workspaceName) => {
       return await axios.post(`${BASE_URL}/api/user/`);
     },
+    getWorkspaceName: (name) => {
+      return name;
+    },
     // bears: 0,
     // removeAllBears: () => set({ bears: 0 }),
     // addBear: () => set({ bears: get().bears + 1 }),
@@ -135,3 +138,19 @@ export default useWorkspaceStore;
 // }
 
 // export default goalService
+
+// const useTestStore = create(
+//   persist(
+//     (set, get) => ({
+//       _id: "",
+//       getStorage: () => {
+//         console.log("storage:::", localStorage.getItem("views"));
+//       },
+//     }),
+//     {
+//       name: "views",
+//     }
+//   )
+// );
+
+// export default useTestStore;

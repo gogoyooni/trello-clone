@@ -17,6 +17,12 @@ const userSchema = new mongoose.Schema(
         ref: "Invitation",
       },
     ],
+    // favoriteBoards: [
+    //   {
+    //     type: mongoose.Schema.Types.ObjectId,
+    //     ref: "Board",
+    //   },
+    // ],
     // invitedBy: [
     //   // 워크스페이스 요청 받은거 (피동))
     //   {

@@ -25,7 +25,7 @@ import useRefreshToken from "../hooks/useRefreshtoken";
 
 export default function Content() {
   const { workspaces } = useOutletContext();
-  console.log("workspaces: ", workspaces);
+  // console.log("workspaces: ", workspaces);
   // console.log("데이터: ", 데이터);
   const navigate = useNavigate();
   const refresh = useRefreshToken();

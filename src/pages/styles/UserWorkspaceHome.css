@@ -5,6 +5,12 @@
   width: 100%;
 }
 
+.loading-spinner__wrapper {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 30px;
+}
+
 hr {
   background-color: #e1e3e7;
   border: 0;

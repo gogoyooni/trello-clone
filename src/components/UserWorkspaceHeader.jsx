@@ -7,7 +7,6 @@ import {
 import Input from "./Input";
 import Container from "./Container";
 import useWorkspaceStore from "../stores/workspaceStore";
-import { getFirstLetter } from "../utils/workspace";
 
 export default function UserWorkspaceHeader({ workspace, ...props }) {
   //   console.log("workspace inside UserWorkspaceHeader ;;;;", workspace);
@@ -52,7 +51,8 @@ export default function UserWorkspaceHeader({ workspace, ...props }) {
             <div className="workspace_name__uppercase">
               {/* {id.split("")[0].toUpperCase()} */}
               {/* {getFirstLetter(workspaceName)} */}
-              {() => getFirstLetter(name)}
+              {/* {() => getFirstLetter(name)} */}
+              {name?.split("")[0]}
             </div>
 
             <div className="workspace_name__username">

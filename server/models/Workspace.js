@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+// const Board = require("./Board");
 
 const workspaceSchema = new mongoose.Schema({
   user: {
@@ -21,6 +22,7 @@ const workspaceSchema = new mongoose.Schema({
     {
       memberId: {
         type: mongoose.Schema.Types.ObjectId,
+        ref: "User",
         required: true,
       },
       isAdmin: { type: Boolean },

@@ -1,0 +1,72 @@
+body {
+  overflow-y: hidden;
+}
+
+#create-board-modal__wrapper {
+  position: absolute;
+  /* position: fixed; */
+  display: flex;
+  flex-direction: column;
+  width: 304px;
+  max-width: 304px;
+  position: relative;
+  padding: 12px;
+  overflow: auto;
+  background-color: #fff;
+  border-radius: 3px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  box-shadow: 0px 8px 12px #091e4226;
+}
+.aesterisk {
+  color: #e34935;
+}
+.required-msg {
+  margin-bottom: 12px;
+  font-size: 14px;
+}
+.board-title:focus {
+  box-shadow: inset 0 0 0 2px #378bff;
+}
+.board-title:not(:focus) {
+  box-shadow: inset 0 0 0 2px #e34935;
+}
+.board-title:not(:focus).board-title-typed {
+  box-shadow: inset 0 0 0 2px #dadde1;
+}
+
+.select-menu-workspace__label {
+  margin-top: 8px;
+}
+
+.create-board-btn {
+  margin-top: 20px;
+  text-align: center;
+  font-size: 14px;
+  color: #b8bcc5;
+  background-color: #f9f9fa;
+  border-radius: 3px;
+  cursor: pointer;
+  padding: 6px 12px;
+}
+.create-board-active-btn {
+  background-color: #0c66e4;
+  color: #fff;
+}
+
+.create-board-modal-title__input {
+  display: flex;
+  flex-direction: column;
+}
+.modal-close-btn {
+  cursor: pointer;
+  border-radius: 3px;
+  width: 20px;
+  height: auto;
+  padding: 5px;
+  /* height: 30px; */
+}
+.modal-close-btn:hover {
+  background-color: #e1e3e7;
+  /* padding: 3px; */
+}

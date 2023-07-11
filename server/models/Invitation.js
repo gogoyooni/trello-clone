@@ -33,9 +33,9 @@ const invitationSchema = new mongoose.Schema({
         required: true,
       },
       inviteeUsername: {
-        type:String
+        type: String,
         required: true,
-    },
+      },
       sentAt: { type: Date, default: Date.now },
       isAccepted: Boolean, // 상대방이 요청 수락 후엔 해당 워크스페이스에 추가하고 invited true 또는 false
       closed: Boolean,

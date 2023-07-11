@@ -1,0 +1,36 @@
+.board-list__wrapper {
+  display: flex;
+  gap: 0 10px;
+  margin-top: 15px;
+}
+.board-list-item__wrapper.add-board {
+  position: relative;
+  border-radius: 3px;
+  background-color: #f3f4f5;
+}
+
+.add-board:hover {
+  background-color: #e1e3e7;
+}
+.add-board-message__wrapper {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+  cursor: pointer;
+}
+.add-board-message__wrapper > span:first-child {
+  font-size: 14px;
+  font-weight: 500;
+}
+.add-board-message__wrapper > span:nth-child(2) {
+  font-size: 12px;
+  font-weight: 400;
+}
+.create-new-board-msg {
+}
+
+/* .create-board-modal-right {
+  position: absolute;
+} */

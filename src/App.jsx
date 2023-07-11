@@ -64,6 +64,14 @@ export default function App() {
                 </Protected>
               }
             />
+            <Route
+              path="/b/:boardId/:boardName"
+              element={
+                <Protected>
+                  <Board />
+                </Protected>
+              }
+            />
 
             {/* <Route path="about" element={<About />} /> */}
             {/* Using path="*"" means "match anything", so this route

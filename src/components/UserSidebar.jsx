@@ -13,9 +13,15 @@ import useUserStore from "../store";
 
 // UserSidebar가 유저가 로그인 후에 보이는 /u/:username/boards에 쓰이는 사이드바
 //UserSidebar와 그냥 Sidebar를 조건부로 렌더링 필요
-export default function UserSidebar({ workspaces, toggleModal }) {
+export default function UserSidebar({
+  workspaces,
+  toggleModal,
+  setCurrentWorkplace,
+}) {
   const { username } = useParams();
   const globalUsername = useUserStore((state) => state.username);
+
+  //   console.log("setCurrentWorkplace", setCurrentWorkplace);
 
   const navigate = useNavigate();
   return (
@@ -55,6 +61,7 @@ export default function UserSidebar({ workspaces, toggleModal }) {
         </div> */}
         <UserSidebarWorkspaceWrapper
           workspaces={workspaces.length > 0 && workspaces}
+          setCurrentWorkplace={setCurrentWorkplace && setCurrentWorkplace}
         />
         {/* <li className="user-sidebar__workspace">
             <div className="user-sidebar__workspace-item">

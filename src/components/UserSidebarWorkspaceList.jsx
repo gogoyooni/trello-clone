@@ -9,13 +9,18 @@ import {
 
 import useUserStore from "../store";
 
-export default function UserSidebarWorkspaceList({ workspace }) {
+export default function UserSidebarWorkspaceList({
+  workspace,
+  setCurrentWorkplace,
+}) {
   const [isClicked, setIsClicked] = useState(false);
   const { _id } = workspace; // workspace id
   // console.log("workspace:::", workspace);
   // const username = useUserStore((state) => state._id);
+  // console.log("setCurrentWorkplace", setCurrentWorkplace);
 
   console.log("isClicked", isClicked);
+  console.log("workspace.name", workspace.name);
   return (
     <li className="user-sidebar__workspace">
       <div
@@ -40,7 +45,10 @@ export default function UserSidebarWorkspaceList({ workspace }) {
       </div>
       {isClicked ? (
         <ul className="user-sidebar__workspace-sub-wrapper">
-          <li className="user-sidebar__workspace__sub-menu">
+          <li
+            className="user-sidebar__workspace__sub-menu"
+            onClick={() => setCurrentWorkplace(workspace.name)}
+          >
             <NavLink
               // className="user-sidebar__workspace__sub-menu-wrapper"
               className={({ isActive }) =>
@@ -48,6 +56,7 @@ export default function UserSidebarWorkspaceList({ workspace }) {
                   ? "user-sidebar__workspace__sub-menu-wrapper sub-menu_active"
                   : "user-sidebar__workspace__sub-menu-wrapper"
               }
+              // reloadDocument
               to={`/w/${_id}/home`}
             >
               <MdDashboard className="user-sidebar__workspace__sub-menu-icon" />

@@ -1,25 +1,40 @@
-const { ObjectId } = require("mongodb");
 const mongoose = require("mongoose");
 
 const boardSchema = new mongoose.Schema(
   {
     // user: {
     //   type: mongoose.Schema.Types.ObjectId,
-    //   required: true,
     //   ref: "User",
     // },
-    name: String,
+    // workspace: {
+    //   type: mongoose.Schema.Types.ObjectId,
+    //   ref: "Workspace",
+    // },
+    name: {
+      type: String,
+    },
+    bgUrl: {
+      type: String,
+    },
     data: [
       {
-        column: Number,
-        title: String,
+        column: {
+          type: Number,
+        },
+        title: {
+          type: String,
+        },
         tasks: [
           {
             taskId: {
               type: mongoose.Schema.Types.ObjectId,
             },
-            title: String,
-            description: String,
+            title: {
+              type: String,
+            },
+            description: {
+              type: String,
+            },
           },
         ],
       },

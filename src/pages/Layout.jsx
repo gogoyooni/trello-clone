@@ -16,13 +16,17 @@ import Modal from "../components/Modal";
 function Layout() {
   const isBoard = useMatch("/u/:username/boards");
   const isWorkspace = useMatch("/w/:workspaceId/home");
+  const isSpecificBoard = useMatch("/b/:boardId/:boardName");
 
   console.log("isWorkspace: ", isWorkspace?.pattern.path);
   console.log("isBoard:", isBoard?.pattern.path);
+  console.log("isSpecificBoard :", isSpecificBoard?.pattern.path);
   const [isSidebarFolded, setIsSidebarFolded] = useState(false);
   const [workspaces, setWorkspaces] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [isModalVisible, setIsModalVisible] = useState(false);
+
+  const [currentWorkplace, setCurrentWorkplace] = useState("");
 
   const [isWorkspaceDropdownShown, setIsWorkspaceDropdownShown] =
     useState(false);
@@ -34,15 +38,15 @@ function Layout() {
   // });
   // redirect("/login");
   // console.log("username from store", username);
-
+  // console.log("currentworkplace :::", currentWorkplace);
   const editWorkspaceName = () => {};
-  console.log("isWorkspace:", isWorkspace);
+  // console.log("isWorkspace:", isWorkspace);
 
   const id = useUserStore((state) => state._id);
   const token = useUserStore((state) => state.accessToken);
   const logout = useUserStore((state) => state.logout);
 
-  const fetchWorkspaces = async () => {
+  const fetchWorkspaces = useCallback(async () => {
     setIsLoading(true);
     try {
       const { data } = await workspaceService._getWorkspaces(
@@ -58,7 +62,7 @@ function Layout() {
       return <div>Something wrong</div>;
     }
     console.log("workspaces of fetchWorkspaces --", workspaces);
-  };
+  }, []);
   useEffect(() => {
     fetchWorkspaces();
   }, []);
@@ -86,23 +90,30 @@ function Layout() {
               <span>Workspaces</span>
               <MdOutlineKeyboardArrowDown className="main-navigation__arrow-down" />
             </div>
+
             <NavDropdown
               menuName={"Workspaces"}
               isOpen={isWorkspaceDropdownShown}
               onClickOutside={(e) => setIsWorkspaceDropdownShown(false)}
             >
-              <h3 className="workspace__header current-workspace">
-                Current Workspace
-              </h3>
-              <li className="workspace-list">
-                <div className="workspace__first-letter">
-                  {workspaces.length == 1 && getFirstLetter(workspaces[0].name)}
-                </div>
-                <div className="workspace__name">
-                  {workspaces.length == 1 && workspaces[0].name}
-                </div>
-              </li>
-              <div className="workspace__line"></div>
+              {isWorkspace || isSpecificBoard ? (
+                <>
+                  <h3 className="workspace__header current-workspace">
+                    Current Workspace
+                  </h3>
+                  <li className="workspace-list">
+                    <div className="workspace__first-letter">
+                      {/* {workspaces.length == 1 && getFirstLetter(workspaces[0].name)} */}
+                      {getFirstLetter(currentWorkplace)}
+                    </div>
+                    <div className="workspace__name">
+                      {/* {workspaces.length == 1 && workspaces[0].name} */}
+                      {currentWorkplace !== "" ? currentWorkplace : "뭐야"}
+                    </div>
+                  </li>
+                  <div className="workspace__line"></div>
+                </>
+              ) : null}
               {workspaces && <WorkspaceList workspaces={workspaces} />}
             </NavDropdown>
           </li>
@@ -139,6 +150,7 @@ function Layout() {
           <UserSidebar
             workspaces={workspaces.length > 0 && workspaces}
             toggleModal={setIsModalVisible}
+            setCurrentWorkplace={setCurrentWorkplace && setCurrentWorkplace}
           />
         ) : (
           <Sidebar
@@ -164,4 +176,4 @@ function Layout() {
   );
 }
 
-export default Layout;
+export default memo(Layout);
