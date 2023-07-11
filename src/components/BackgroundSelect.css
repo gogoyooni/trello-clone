@@ -33,7 +33,7 @@
   position: relative;
 }
 
-.bg-1 {
+.bg1 {
   background: rgb(170, 119, 255);
   background: linear-gradient(
     158deg,
@@ -42,7 +42,7 @@
     rgba(151, 222, 255, 1) 80%
   );
 }
-.bg-2 {
+.bg2 {
   background: rgb(11, 80, 175);
   background: linear-gradient(
     158deg,
@@ -52,7 +52,7 @@
   );
 }
 
-.bg-3 {
+.bg3 {
   background: rgb(20, 42, 152);
   background: linear-gradient(
     158deg,
@@ -62,7 +62,7 @@
   );
 }
 
-.bg-4 {
+.bg4 {
   background: rgb(103, 66, 132);
   background: linear-gradient(
     158deg,
@@ -72,7 +72,7 @@
   );
 }
 
-.bg-5 {
+.bg5 {
   background: rgb(239, 118, 58);
   background: linear-gradient(
     158deg,

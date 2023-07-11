@@ -8,7 +8,7 @@ const {
 
 const { protect } = require("../middleware/authMiddleware");
 
-router.get("/:id/workspace/:workspaceId", getWorkspace);
+router.get("/:id/workspace/:workspaceId", getWorkspace); //이거 workspace를 workspaces로 변경해야함
 router.get("/:id/workspaces", getWorkspaces);
 router.post("/:id/workspace", createWorkspace);
 

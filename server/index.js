@@ -18,7 +18,7 @@ mongoose.connect(process.env.DATABASE_URL);
 
 app.use("/api/auth/users", require("./routes/userRoutes"));
 app.use("/api/user", require("./routes/workspaceRoutes"));
-// app.use("/api/user", require())
+app.use("/api/user", require("./routes/boardRoutes.js"))
 
 app.get("/", async (req, res) => {
   // res.send("root route");

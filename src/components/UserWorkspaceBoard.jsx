@@ -57,6 +57,7 @@ const style = {
 export default function UserWorkspaceBoard({
   workspace,
   showRemainingBoards,
+  workspaceIndex,
   ...props
 }) {
   // console.log("workspace>>>>>>>>>>>>>>>>>>>>>", workspace?.name);
@@ -116,11 +117,13 @@ export default function UserWorkspaceBoard({
           </Link>
         </div>
       </div>
-      <BoardList
+      <BoardList       
+        workspaceId={workspace?._id}
+        workspaceName={workspace?.name}
         boards={workspace?.boards}
         showRemainingBoards={showRemainingBoards}
         {...props}
-      />
+      />      
     </div>
   );
 }

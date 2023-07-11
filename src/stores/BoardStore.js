@@ -1,7 +1,7 @@
 import { create } from "zustand";
 // import { persist } from "zustand/middleware";
 import axios from "axios";
-// import workspaceService from "../features/workspace/workspaceService";
+import boardService from "../features/workspace/boardService";
 
 const BASE_URL = "http://localhost:3000";
 
@@ -12,6 +12,26 @@ const useBoardStore = create((set, get) => ({
 
     console.log("props : ", props, "ref : ", ref);
   },
+  createBoardTitle:"",
+  setCreateBoardTitle: (boardTitle) => 
+  set((state) => ({
+    createBoardTitle: boardTitle,
+  })),
+  workspaceId: "",
+  setWorkspaceId: (workspaceId) => 
+  set((state) => ({
+    workspaceId: workspaceId,
+  })),
+  selectedWorkspace: "",
+  setSelectedWorkspace: (workspaceName) => 
+  set((state) => ({
+    selectedWorkspace:workspaceName,
+  })),
+  selectedBgColor: "",
+  setSelectedBgColor: (bgColor) =>
+    set((state) => ({
+      selectedBgColor: bgColor,
+    })),
   createBoardIsClicked: false,
   setCreateBoardIsClicked: () =>
     set((state) => ({
@@ -75,6 +95,13 @@ const useBoardStore = create((set, get) => ({
       // };
     }
   },
+  createBoard: async (ids, data, token) => {
+    const {id, workspaceId} = ids;
+    const response = await boardService._createBoard(`/api/user/${id}/workspaces/${workspaceId}/boards`, data, token);
+    console.log("response from createBoard inside zustands state", response);
+    return response;
+  },
+
   workspaceName: "",
   website: "", // optional
   description: "", //optional

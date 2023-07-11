@@ -17,6 +17,7 @@ body {
   overflow-y: auto;
   overflow-x: hidden;
   box-shadow: 0px 8px 12px #091e4226;
+  min-height: 500px;
 }
 .aesterisk {
   color: #e34935;

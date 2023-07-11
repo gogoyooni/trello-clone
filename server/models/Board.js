@@ -13,6 +13,9 @@ const boardSchema = new mongoose.Schema(
     name: {
       type: String,
     },
+    bgColor: {
+      type:String,
+    },
     bgUrl: {
       type: String,
     },

@@ -196,8 +196,8 @@ export default function UserBoards() {
       {createBoardIsClicked ? (
         <CreateBoardModal
           modalPosition={modalPosition}
-          // setCreateBoardIsClicked={setCreateBoardIsClicked}
-          // createBoardIsClicked={createBoardIsClicked}
+          workspaces={workspaces}
+          
         />
       ) : null}
     </div>

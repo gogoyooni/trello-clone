@@ -255,16 +255,20 @@ const useUserStore = create(
         const dataToSave = JSON.stringify(users);
         localStorage.setItem("users", dataToSave);
       },
-      checkLocalStorage: (userId) => {
-        return localStorage.getItem(userId);
+      // checkLocalStorage: (userId) => {
+      //   return localStorage.getItem(userId);
+      // },
+      checkLocalStorage: () => {
+        return JSON.parse(localStorage.getItem("user"));
       },
-      saveRecentlyViewed: (boardId, boardName, bgUrl) => {
+      saveRecentlyViewed: (boardId, boardName, bgUrl, bgColor) => {
         let data = [];
         data.unshift({
           boardId,
           boardName,
           url: `/b/${boardId}/${boardName}`,
           bgUrl: bgUrl,
+          bgColor: bgColor
         });
         localStorage.setItem(get()._id, JSON.stringify(data)); // 이 줄에 쓰인 boardId는 유저아이디이지만 boardId로 활용하고있음
       },

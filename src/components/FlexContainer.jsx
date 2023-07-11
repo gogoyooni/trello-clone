@@ -1,11 +1,13 @@
 import React from "react";
 
-const style = {
-  display: "flex",
-  justifyContent: "center",
-  alignItems: "center",
-};
 
-export default function FlexContainer({ children }) {
+
+export default function FlexContainer({ children, height}) {
+  const style = {
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    height
+  };
   return <div style={style}>{children}</div>;
 }

@@ -14,10 +14,22 @@ const style = {
   // borderRadius: 7,
 };
 
-export default function BoardListItem({ name, boardId, bgUrl, ...props }) {
+
+
+export default function BoardListItem({ name, boardId, bgUrl, bgColor, workspaceName, workspaceIndex, ...props }) {
   // if (noBoard) {
   //   return;
   // }
+
+  // const bgColors = {
+  //   bgColor1: {background: "linear-gradient( 158deg, rgba(170, 119, 255, 1) 0%, rgba(201, 238, 255, 1) 46%, rgba(151, 222, 255, 1) 80% )"},
+  //   bgColor2: {background:"linear-gradient( 158deg, rgba(11, 80, 175, 0.9108018207282913) 0%, rgba(11, 116, 164, 1) 46%, rgba(3, 71, 103, 1) 80% )"},
+  //   bgColor3: {background:"linear-gradient( 158deg, rgba(20, 42, 152, 1) 0%, rgba(71, 23, 110, 1) 46%, rgba(162, 76, 143, 1) 80% )"},
+  //   bgColor4: {background:"linear-gradient( 158deg, rgba(103, 66, 132, 1) 0%, rgba(168, 42, 209, 1) 46%, rgba(196, 19, 133, 1) 80% )"},
+  //   bgColor5: {background:"linear-gradient( 158deg, rgba(239, 118, 58, 1) 0%, rgba(250, 207, 95, 1) 46%, rgba(255, 187, 125, 1) 80% )"}, 
+  // }
+  // console.log("bgColors.bgColor1: ", bgColors[`${bgColor}`])
+
   const [isHovered, setIsHovered] = useState(false);
   const [starIsClicked, setStarIsClicked] = useState(false);
   // const { View } = useLottie(options, style);
@@ -60,17 +72,17 @@ export default function BoardListItem({ name, boardId, bgUrl, ...props }) {
     [starIsClicked]
   );
 
-  const handleSaveRecentlyVeiwed = useCallback(() => {
+  const handleSaveRecentlyViewed = useCallback(() => {
     const saveRecentlyViewed = props.saveRecentlyViewed;
     const checkLocalStorage = props.checkLocalStorage;
     const dataIsExisted = checkLocalStorage();
     if (!dataIsExisted) {
       // when it doesn't exist
-      saveRecentlyViewed(boardId, name, bgUrl);
+      saveRecentlyViewed(boardId, name, bgUrl, bgColor);
       // console.log("check local storage ::", checkLocalStorage());
     }
     // console.log("dataIsExisted", dataIsExisted);
-  }, [boardId, name, bgUrl]);
+  }, [boardId, name, bgUrl, bgColor]);
 
   // console.log("함수 넘어왔니", saveRecentlyViewed, checkLocalStorage);
 
@@ -79,8 +91,8 @@ export default function BoardListItem({ name, boardId, bgUrl, ...props }) {
     backgroundColor: isHovered ? "#0000004d" : "",
     // zIndex: "10",
   };
-  console.log("starIsClicked", starIsClicked);
-
+  // console.log("starIsClicked", starIsClicked);
+  console.log("bgColor: ", bgColor)
   // useEffect(() => {}, [starIsClicked]);
   return (
     <div className="board-list-item__wrapper">
@@ -90,12 +102,13 @@ export default function BoardListItem({ name, boardId, bgUrl, ...props }) {
           className="board-list-item-bg"
           onMouseEnter={handleHoverOnBoardItem}
           onMouseLeave={handleHoverOnBoardItem}
+          style={{background: `${bgColor}`}}
         >
-          <img
+          {/* <img
             className="board-list-item-bg__img"
             src={bgUrl}
             alt="background image"
-          />
+          /> */}
           <div className="board-list-item__name-1">{name}</div>
           {isHovered ? (
             <div className="board-list-item-overlay">
@@ -104,7 +117,7 @@ export default function BoardListItem({ name, boardId, bgUrl, ...props }) {
                 // to={`/b/${boardId}/${name}`}
                 onClick={(e) => {
                   e.preventDefault();
-                  handleSaveRecentlyVeiwed();
+                  handleSaveRecentlyViewed();
                   navigate(`/b/${boardId}/${name}`);
                 }}
               >

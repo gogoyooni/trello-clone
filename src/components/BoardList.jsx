@@ -17,6 +17,8 @@ export default function BoardList({
   boards,
   recentlyViewedBoards,
   recentlyViewed,
+  workspaceName,
+  workspaceId,
   // createBoardIsClicked,
   // setCreateBoardIsClicked,
   ...props
@@ -53,6 +55,9 @@ export default function BoardList({
   const modalPosition = useBoardStore((state) => state.modalPosition);
   const setModalPosition = useBoardStore((state) => state.setModalPosition);
 
+  const setWorkspaceId = useBoardStore((state) => state.setWorkspaceId);
+  const setSelectedWorkspace = useBoardStore((state) => state.setSelectedWorkspace);
+
   // const setCreateBoardPositions = useBoardStore(
   //   (state) => state.setCreateBoardPositions
   // );
@@ -63,8 +68,10 @@ export default function BoardList({
         <div className="board-list__wrapper">
           {recentlyViewedBoards?.map((board, i) => (
             <BoardListItem
+              workspaceName={workspaceName}
               key={i}
               boardId={board._id}
+              bgColor={board.bgColor}
               bgUrl={board.bgUrl}
               {...props}
               // img={board.img}
@@ -191,14 +198,17 @@ export default function BoardList({
   //   };
   // }, [window.innerWidth]);
 
+  // console.log("Inside boardlist, workspaceId:", workspaceId)
   return (
     <>
       <div className="board-list__wrapper">
         {boards?.map((board, i) => (
           <BoardListItem
             key={i}
+            workspaceName={workspaceName}
             name={board.name}
             boardId={board._id}
+            bgColor={board.bgColor}
             bgUrl={board.bgUrl}
             {...props}
             // img={board.img}
@@ -217,6 +227,8 @@ export default function BoardList({
 
                 setCreateBoardIsClicked(!createBoardIsClicked);
                 setModalPosition(getCreateBoardPosition(e.target));
+                setWorkspaceId(workspaceId)
+                setSelectedWorkspace(workspaceName);
 
                 // setCreateBoardPositions(getCreateBoardPositions())
               }}

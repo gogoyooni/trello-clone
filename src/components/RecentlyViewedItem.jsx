@@ -8,6 +8,7 @@ export default function RecentlyViewedItem({
   boardName,
   url,
   bgUrl,
+  bgColor,
   ...props
 }) {
   const [isHovered, setIsHovered] = useState(false);
@@ -58,7 +59,7 @@ export default function RecentlyViewedItem({
     // const dataIsExisted = checkLocalStorage();
     // if (!dataIsExisted) {
     // when it doesn't exist
-    saveRecentlyViewed(boardId, boardName, bgUrl);
+    saveRecentlyViewed(boardId, boardName, bgUrl, bgColor);
     // console.log("check local storage ::", checkLocalStorage());
     // }
     // console.log("dataIsExisted", dataIsExisted);
@@ -82,12 +83,13 @@ export default function RecentlyViewedItem({
           className="board-list-item-bg"
           onMouseEnter={handleHoverOnBoardItem}
           onMouseLeave={handleHoverOnBoardItem}
+          style={{background: `${bgColor}`}}
         >
-          <img
+          {/* <img
             className="board-list-item-bg__img"
             src={bgUrl}
             alt="background image"
-          />
+          /> */}
           <div className="board-list-item__name-1">{boardName}</div>
           {isHovered ? (
             <div className="board-list-item-overlay">

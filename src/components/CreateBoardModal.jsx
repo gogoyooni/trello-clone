@@ -2,12 +2,16 @@ import React, { useState, useEffect, useRef } from "react";
 import { createPortal } from "react-dom";
 import { MdClose } from "react-icons/md";
 import { MdOutlineKeyboardArrowDown } from "react-icons/md";
+import { PulseLoader } from "react-spinners";
 import "./CreateBoardModal.css";
 import SelectMenu from "./SelectMenu";
 import "./SelectMenu.css";
 import BackgroundSelect from "./BackgroundSelect";
 import useBoardStore from "../stores/BoardStore";
-
+import workspaceService from "../features/workspace/workspaceService";
+import FlexContainer from "./FlexContainer";
+import Loading from "./Loading";
+import useUserStore from "../store";
 // const style = {
 //   display: "absolute",
 //   width: "304px",
@@ -67,7 +71,7 @@ const style = {
   },
   defaultValue: {
     flex: "1",
-    textOvverflow: "ellipsis",
+    textOverflow: "ellipsis",
     overflow: "hidden",
     whiteSpace: "nowrap",
   },
@@ -93,24 +97,54 @@ const style = {
   },
 };
 
-export default function CreateBoardModal({ modalPosition }) {
+export default function CreateBoardModal({ modalPosition, workspaces }) {
   const [boardTitle, setBoardTitle] = useState("");
   const [isDropped, setIsDropped] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  // const [workspaces, setWorkspaces] = useState([]);
   const boardTitleRef = useRef();
 
   const { top, left } = modalPosition;
+
+  // const getUsername = useUserStore((state) => state.checkLocalStorage)
+  // console.log("getusername", getUsername().username)
 
   const closeCreateBoardModal = useBoardStore(
     (state) => state.closeCreateBoardModal
   );
 
+  const getUserData = useUserStore((state)=> state.checkLocalStorage);
+
+  const createBoard = useBoardStore((state) => state.createBoard);
+
+  const workspaceId = useBoardStore((state) => state.workspaceId);
+  const selectedWorkspace = useBoardStore((state) => state.selectedWorkspace);
+
+  const createBoardTitle = useBoardStore((state) => state.createBoardTitle);
+  const setCreateBoardTitle = useBoardStore((state) => state.setCreateBoardTitle);
+
+  const selectedBgColor = useBoardStore((state) => state.selectedBgColor);
+  
   const onChangeBoardTitle = (e) => {
-    setBoardTitle(e.target.value);
+    // setBoardTitle(e.target.value);
+    setCreateBoardTitle(e.target.value);
     // console.log(e.target.value);
   };
 
+  // const getWorkspaces = async () => { 
+  //   const response = await workspaceService._getWorkspaces(`/api/user/${getUsername()._id}/workspaces`);
+  //   console.log("response", response);
+  //   setIsLoading(false);
+  // }
+
+
+
+
   useEffect(() => {
+    // setIsLoading(true);
     boardTitleRef.current.focus();
+
+    
     // const modal = document.getElementById("create-board-modal__wrapper");
 
     // modal.addEventListener("click", (e) => {
@@ -142,10 +176,20 @@ export default function CreateBoardModal({ modalPosition }) {
     //     console.log("clean up");
     //   });
     // };
+    
+    // getWorkspaces();
+
+    
   }, []);
+
+  // console.log("workspaces inside modal: ", workspaces)
   return createPortal(
+   
     <div id="create-board-modal__wrapper" style={{ top, left }}>
-      <header className="create-board-modal__header" style={style.header}>
+  {isLoading ?<FlexContainer height={"500px"}>
+    <Loading />
+  </FlexContainer> :  (<>
+    <header className="create-board-modal__header" style={style.header}>
         <div className="create-board-modal__title" style={style.modalTitle}>
           Create Board
         </div>
@@ -174,64 +218,34 @@ export default function CreateBoardModal({ modalPosition }) {
           Workspace
         </label>
       </div>
-      <SelectMenu>
-        <div
-          className="select-menu__option"
-          style={style.option}
-          onClick={() => {
-            setIsDropped(!isDropped);
-          }}
-        >
-          {/* // 여기가 처음에 모달 봤을때 Default 워크스페이스 값 보여주는곳 */}
-
-          <div
-            className="select-menu__default-value"
-            id="default-workspace"
-            style={style.defaultValue}
-          >
-            난경제적으로풍요롭다
-          </div>
-          <MdOutlineKeyboardArrowDown
-            className="arrow-down__icon"
-            style={style.arrowDownIcon}
-          />
-          {/* // 드랍다운 메뉴들 */}
-        </div>
-        {isDropped ? (
-          <div className="dropdown-menu__wrapper" style={style.dropdownMenu}>
-            <div className="dropdown-option" style={style.dropdownOption}>
-              <span>난경제적으로풍요롭다</span>
-              <span
-                className="remaining-boards-count"
-                style={style.remainingBoardsCount}
-              >
-                5 boards remaining
-              </span>
-            </div>
-            <div className="dropdown-option" style={style.dropdownOption}>
-              <span>워크스페이스</span>
-              <span
-                className="remaining-boards-count"
-                style={style.remainingBoardsCount}
-              >
-                7 boards remaining
-              </span>
-            </div>
-          </div>
-        ) : null}
-      </SelectMenu>
+      <SelectMenu workspaces={workspaces} isDropped={isDropped} setIsDropped={setIsDropped}/>
       <button
         className={`create-board-btn ${
-          boardTitle.length > 0 ? "create-board-active-btn" : ""
+          createBoardTitle.length > 0 ? "create-board-active-btn" : ""
         }`}
-        disabled
+        disabled={createBoardTitle.length < 1 ? true : false}
+        onClick={() => {
+          const data = getUserData();
+          // console.log("clicked createBoard", data)
+          const {_id, accessToken} = data;
+          createBoard({
+            id: _id, 
+            workspaceId
+          }, {
+            boardTitle: createBoardTitle,
+            bgColor: selectedBgColor,
+            workspaceName: selectedWorkspace
+          }, accessToken)
+
+        }}
       >
-        Create
+        {isLoading ?  <PulseLoader color="#bcbdbd" /> : "Create"}
       </button>
       {/* <div className="create-board-modal-__ws-select-menu">
         <label htmlFor="workspace">Workspace</label>
         <input type="text" name="workspace" />
       </div> */}
+  </>)}
     </div>,
     document.getElementById("create-board-portal")
   );

@@ -13,10 +13,24 @@ const workspaceSchema = new mongoose.Schema({
   // isAdmin: Boolean, // 내가 초대된 워크스페이스에서 소유주의 권한에 따라 어드민은 가능함
   // isMember: Boolean, // 멤버는 default 값
   boards: [
+    // {
+    //   type: mongoose.Schema.Types.ObjectId,
+    //   ref: "Board",
+    // },
     {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Board",
-    },
+      name: {
+        type: String, required: true
+      },
+      data: {
+        type: Array
+      },
+      bgUrl: {
+        type: String,
+      },
+      bgColor: {
+        type: String
+      }
+    }
   ],
   team: [
     {

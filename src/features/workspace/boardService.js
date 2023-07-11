@@ -23,8 +23,9 @@ const _getBoards = async (url, name, token) => {
 
 // Star board( as a Like button) @desc 보드에 favoriteBoardsd에 추가
 
-// Create a workspace
-const _createWorkspace = async (url, name, token) => {
+// Create a board 
+// @desc u/유저네임/boards 에서 'Create new board' 모달로 보드 만들때 사용
+const _createBoard = async (url, data, token) => {
   const config = {
     headers: {
       Authorization: `Bearer ${token}`,
@@ -32,7 +33,7 @@ const _createWorkspace = async (url, name, token) => {
   };
 
   return await axios
-    .post(`${BASE_URL}${url}`, name, config)
+    .post(`${BASE_URL}${url}`, data, config)
     .then((data) => {
       console.log(data);
       return data;
@@ -80,10 +81,9 @@ const _getWorkspaces = async (url, data, token) => {
     });
 };
 
-const workspaceService = {
-  _createWorkspace,
-  _getWorkspace,
-  _getWorkspaces,
+const boardService = {
+  _createBoard,
+  
 };
 
-export default workspaceService;
+export default boardService;
