@@ -1,7 +1,10 @@
 .board-list__wrapper {
   display: flex;
-  gap: 0 10px;
+  flex-wrap: wrap;
+  /* gap: 15px 20px; */
   margin-top: 15px;
+  /* margin: 0 2% 2% 0; */
+
 }
 .board-list-item__wrapper.add-board {
   position: relative;

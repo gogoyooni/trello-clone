@@ -5,6 +5,9 @@ import BoardList from "./BoardList";
 import { getFirstLetter } from "../utils/workspace";
 
 const style = {
+  yourWorkspaceAllBoardsWrapper:{
+    marginBottom: "15px"
+  },
   yourWorkspacesHeader: {
     fontSize: "16px",
     fontWeight: "600",
@@ -65,7 +68,7 @@ export default function UserWorkspaceBoard({
 
   //   );
   return (
-    <div className="your-workspace-all-boards__wrapper">
+    <div className="your-workspace-all-boards__wrapper" style={style.yourWorkspaceAllBoardsWrapper}>
       <div
         className="your-worksplace-no-sidebar"
         style={style.yourWorkspacesNoSidebar}

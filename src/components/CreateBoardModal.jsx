@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
+import { useNavigate, redirect } from "react-router-dom";
 import { createPortal } from "react-dom";
 import { MdClose } from "react-icons/md";
 import { MdOutlineKeyboardArrowDown } from "react-icons/md";
@@ -12,6 +13,11 @@ import workspaceService from "../features/workspace/workspaceService";
 import FlexContainer from "./FlexContainer";
 import Loading from "./Loading";
 import useUserStore from "../store";
+
+import { toast } from "react-toastify";
+
+
+
 // const style = {
 //   display: "absolute",
 //   width: "304px",
@@ -97,10 +103,14 @@ const style = {
   },
 };
 
-export default function CreateBoardModal({ modalPosition, workspaces }) {
+export default function CreateBoardModal({ modalPosition, workspaces, setWorkspaces }) {
+  const navigate = useNavigate();
   const [boardTitle, setBoardTitle] = useState("");
   const [isDropped, setIsDropped] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+
+
+  const [createNewBoardIsLoading, setCreateNewBoardIsLoading] = useState(false);
   // const [workspaces, setWorkspaces] = useState([]);
   const boardTitleRef = useRef();
 
@@ -136,7 +146,66 @@ export default function CreateBoardModal({ modalPosition, workspaces }) {
   //   console.log("response", response);
   //   setIsLoading(false);
   // }
+  const handleCreateBoard = async () => {
+    const data = getUserData();
+    // console.log("clicked createBoard", data)
+    const {_id, accessToken} = data;
+    setCreateNewBoardIsLoading(true);
+    const response = await createBoard({
+      id: _id, 
+      workspaceId
+    }, {
+      boardTitle: createBoardTitle,
+      bgColor: selectedBgColor,
+      workspaceName: selectedWorkspace
+    }, accessToken)
 
+    if(response.status >= 200 && response.status < 300){
+      toast.success("🦄 A new board has been created successfully", {
+        position: "top-center",
+        autoClose: 1000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+    } else {
+      toast.error("🦄 Something went wrong, Try again", {
+        position: "top-center",
+        autoClose: 900,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+    }
+    setCreateNewBoardIsLoading(false);  
+    console.log("handleCreateBoard: ", response.data)
+    const boardId = response.data.workspace.boards[response.data.workspace.boards.length-1]._id;
+    const boardName = response.data.workspace.boards[response.data.workspace.boards.length-1].name;
+
+    // const changedWorkspace = workspaces.findIndex(workspace => workspace.name === selectedWorkspace);
+    setWorkspaces((prevState) => {
+      const newState = prevState?.map(workspace => {
+        if(workspace.name === selectedWorkspace){
+          return {...workspace, boards: response?.data.workspace.boards};
+        }
+        return workspace;
+      })
+      return newState;
+    })
+    
+
+    setTimeout(() => {
+      navigate(`/b/${boardId}/${boardName}`)
+      // redirect(`/b/${boardId}/${boardName}`);
+    }, 1000)
+
+  }
 
 
 
@@ -225,21 +294,24 @@ export default function CreateBoardModal({ modalPosition, workspaces }) {
         }`}
         disabled={createBoardTitle.length < 1 ? true : false}
         onClick={() => {
-          const data = getUserData();
-          // console.log("clicked createBoard", data)
-          const {_id, accessToken} = data;
-          createBoard({
-            id: _id, 
-            workspaceId
-          }, {
-            boardTitle: createBoardTitle,
-            bgColor: selectedBgColor,
-            workspaceName: selectedWorkspace
-          }, accessToken)
+          // const data = getUserData();
+          // // console.log("clicked createBoard", data)
+          // const {_id, accessToken} = data;
+          // setCreateNewBoardIsLoading(true);
+          // createBoard({
+          //   id: _id, 
+          //   workspaceId
+          // }, {
+          //   boardTitle: createBoardTitle,
+          //   bgColor: selectedBgColor,
+          //   workspaceName: selectedWorkspace
+          // }, accessToken)
+          // setCreateNewBoardIsLoading(false);
+          handleCreateBoard();
 
         }}
       >
-        {isLoading ?  <PulseLoader color="#bcbdbd" /> : "Create"}
+        {createNewBoardIsLoading ?  <PulseLoader color="#fff" size={10} /> : "Create"}
       </button>
       {/* <div className="create-board-modal-__ws-select-menu">
         <label htmlFor="workspace">Workspace</label>

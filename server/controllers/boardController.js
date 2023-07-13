@@ -41,6 +41,8 @@ const createBoard = asyncHandler(async (req, res) => {
     workspaceDoc.boards.push(newBoard)
     await workspaceDoc.save();
 
+    return res.status(200).json({ workspace: workspaceDoc });
+
     // workspaceDoc.boards.push({
       
     // })

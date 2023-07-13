@@ -18,9 +18,9 @@ function Layout() {
   const isWorkspace = useMatch("/w/:workspaceId/home");
   const isSpecificBoard = useMatch("/b/:boardId/:boardName");
 
-  console.log("isWorkspace: ", isWorkspace?.pattern.path);
-  console.log("isBoard:", isBoard?.pattern.path);
-  console.log("isSpecificBoard :", isSpecificBoard?.pattern.path);
+  // console.log("isWorkspace: ", isWorkspace?.pattern.path);
+  // console.log("isBoard:", isBoard?.pattern.path);
+  // console.log("isSpecificBoard :", isSpecificBoard?.pattern.path);
   const [isSidebarFolded, setIsSidebarFolded] = useState(false);
   const [workspaces, setWorkspaces] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -39,7 +39,7 @@ function Layout() {
   // redirect("/login");
   // console.log("username from store", username);
   // console.log("currentworkplace :::", currentWorkplace);
-  const editWorkspaceName = () => {};
+
   // console.log("isWorkspace:", isWorkspace);
 
   const id = useUserStore((state) => state._id);
@@ -148,7 +148,7 @@ function Layout() {
 
         {isBoard?.pattern.path || isWorkspace?.pattern.path ? (
           <UserSidebar
-            workspaces={workspaces.length > 0 && workspaces}
+            workspaces={workspaces?.length > 0 && workspaces}
             toggleModal={setIsModalVisible}
             setCurrentWorkplace={setCurrentWorkplace && setCurrentWorkplace}
           />
@@ -166,7 +166,8 @@ function Layout() {
         )}
 
         {/* <Content isSidebarFolded={isSidebarFolded} /> */}
-        <Outlet context={{ workspaces }} />
+        {/* <Outlet context={{ workspaces }} /> */}
+        <Outlet context={[workspaces, setWorkspaces]} />
         {/* <Outlet /> */}
         {/* {workspaces?.length > 0 && (
          <Outlet context={{ workspaces: workspaces }} />

@@ -16,6 +16,9 @@ import FlexContainer from "../components/FlexContainer";
 import CreateBoardModal from "../components/CreateBoardModal";
 import useBoardStore from "../stores/BoardStore";
 
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 const data = [
   {
     name: "테스트1",
@@ -40,7 +43,7 @@ export default function UserBoards() {
   const { username } = useParams();
   // const [workspaces, setWorkspaces] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-  const { workspaces } = useOutletContext();
+  const [ workspaces, setWorkspaces ]  = useOutletContext();
   const [recentlyViewedBoards, setRecentlyViewedBoards] = useState([]);
 
   const userId = useUserStore((state) => state._id);
@@ -138,12 +141,12 @@ export default function UserBoards() {
   }, []);
 
   // console.log("workspaces inside Userboards::::", workspaces);
-  console.log(
-    "recentlyViewedBoards",
-    recentlyViewedBoards,
-    "userID::::",
-    userId
-  );
+  // console.log(
+  //   "recentlyViewedBoards",
+  //   recentlyViewedBoards,
+  //   "userID::::",
+  //   userId
+  // );
   // console.log()
   useEffect(() => {
     window.addEventListener("resize", () => {
@@ -158,9 +161,22 @@ export default function UserBoards() {
         console.log("clean up resize event");
       });
     };
-  }, [window.innerWidth]);
+  }, [window.innerWidth, workspaces]);
   return (
     <div className="user-boards-content__section">
+      <ToastContainer
+        position="top-center"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+        style={{ width: "350px" }}
+      />
       {/* <header className="workspace-content__header">
         <div className=""></div>
       </header> */}
@@ -197,6 +213,7 @@ export default function UserBoards() {
         <CreateBoardModal
           modalPosition={modalPosition}
           workspaces={workspaces}
+          setWorkspaces={setWorkspaces}
           
         />
       ) : null}

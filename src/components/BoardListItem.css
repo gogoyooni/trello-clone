@@ -1,14 +1,20 @@
 .board-list-item__wrapper {
-  width: 180px;
+  /* width: 180px; */
+  width: 23.5%;
   height: 95px;
   display: flex;
   border-radius: 3px;
   /* color: #fff; */
-  gap: 0 10px;
+  /* gap: 0 10px; */
   font-weight: 600;
+  margin: 0 2% 2% 0;
+
 }
 .board-list-item__wrapper:last-child {
   position: relative;
+}
+.board-list-item__wrapper:nth-child(4){
+  margin: 0;
 }
 
 .board-list-item {

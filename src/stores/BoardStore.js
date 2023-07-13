@@ -98,7 +98,7 @@ const useBoardStore = create((set, get) => ({
   createBoard: async (ids, data, token) => {
     const {id, workspaceId} = ids;
     const response = await boardService._createBoard(`/api/user/${id}/workspaces/${workspaceId}/boards`, data, token);
-    console.log("response from createBoard inside zustands state", response);
+    // console.log("response from createBoard inside zustands state", response);
     return response;
   },
 
