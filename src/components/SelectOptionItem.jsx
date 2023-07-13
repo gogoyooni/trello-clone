@@ -27,6 +27,7 @@ const style = {
 
 export default function SelectOptionItem({workspace, ...props}) {
   const setSelectedWorkspace = useBoardStore((state) => state.setSelectedWorkspace);
+  const setWorkspaceId = useBoardStore((state) => state.setWorkspaceId);
 
   const {isDropped, setIsDropped} = props;
   return (
@@ -34,6 +35,7 @@ export default function SelectOptionItem({workspace, ...props}) {
         <div className="dropdown-option" style={style.dropdownOption} onClick={() => {
             setIsDropped(!isDropped);
             setSelectedWorkspace(workspace.name)
+            setWorkspaceId(workspace._id)
           }}>
             <span>{workspace?.name}</span>
             <span

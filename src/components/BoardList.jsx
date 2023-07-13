@@ -206,6 +206,7 @@ export default function BoardList({
           <BoardListItem
             key={i}
             workspaceName={workspaceName}
+            workspaceId={workspaceId}
             name={board.name}
             boardId={board._id}
             bgColor={board.bgColor}

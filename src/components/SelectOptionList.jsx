@@ -17,7 +17,7 @@ const style={
 }
 
 export default function SelectOptionList({workspaces, ...props }) {
-    console.log("workspaces inside SelectoptionList::", workspaces)
+    // console.log("workspaces inside SelectoptionList::", workspaces)
   return (
     <div className="dropdown-menu__wrapper" style={style.dropdownMenu}>
         {workspaces?.map((workspace, i) => (

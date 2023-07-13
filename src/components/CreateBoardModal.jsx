@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useRef } from "react";
-import { useNavigate, redirect } from "react-router-dom";
+import React, { useState, useEffect, useRef, useCallback } from "react";
+import { useNavigate } from "react-router-dom";
 import { createPortal } from "react-dom";
 import { MdClose } from "react-icons/md";
 import { MdOutlineKeyboardArrowDown } from "react-icons/md";
@@ -9,19 +9,11 @@ import SelectMenu from "./SelectMenu";
 import "./SelectMenu.css";
 import BackgroundSelect from "./BackgroundSelect";
 import useBoardStore from "../stores/BoardStore";
-import workspaceService from "../features/workspace/workspaceService";
 import FlexContainer from "./FlexContainer";
 import Loading from "./Loading";
 import useUserStore from "../store";
 
 import { toast } from "react-toastify";
-
-
-
-// const style = {
-//   display: "absolute",
-//   width: "304px",
-// };
 
 const style = {
   // wrapper: {
@@ -188,67 +180,27 @@ export default function CreateBoardModal({ modalPosition, workspaces, setWorkspa
     const boardId = response.data.workspace.boards[response.data.workspace.boards.length-1]._id;
     const boardName = response.data.workspace.boards[response.data.workspace.boards.length-1].name;
 
-    // const changedWorkspace = workspaces.findIndex(workspace => workspace.name === selectedWorkspace);
     setWorkspaces((prevState) => {
       const newState = prevState?.map(workspace => {
         if(workspace.name === selectedWorkspace){
-          return {...workspace, boards: response?.data.workspace.boards};
+          // return {...workspace, boards: response?.data.workspace.boards};
+          return {...workspace, boards: [...workspace.boards, response?.data.workspace.boards[response?.data.workspace.boards.length - 1]]};
         }
         return workspace;
       })
       return newState;
     })
     
+    closeCreateBoardModal();
 
     setTimeout(() => {
       navigate(`/b/${boardId}/${boardName}`)
-      // redirect(`/b/${boardId}/${boardName}`);
     }, 1000)
 
-  }
-
-
+  };
 
   useEffect(() => {
-    // setIsLoading(true);
-    boardTitleRef.current.focus();
-
-    
-    // const modal = document.getElementById("create-board-modal__wrapper");
-
-    // modal.addEventListener("click", (e) => {
-    //   const screenCenter =
-    //     document.querySelector("body").getBoundingClientRect().width / 2;
-    //   const clickedElemXposition = e.target.getBoundingClientRect().left;
-
-    //   if (clickedElemXposition > screenCenter) {
-    //     console.log(
-    //       "right position",
-    //       screenCenter,
-    //       " / ",
-    //       clickedElemXposition
-    //     );
-    //   }
-
-    //   if (clickedElemXposition < screenCenter) {
-    //     console.log(
-    //       "left position: ",
-    //       screenCenter,
-    //       " / ",
-    //       clickedElemXposition
-    //     );
-    //   }
-    // });
-
-    // return () => {
-    //   modal.removeEventListener("click", () => {
-    //     console.log("clean up");
-    //   });
-    // };
-    
-    // getWorkspaces();
-
-    
+    boardTitleRef.current.focus();  
   }, []);
 
   // console.log("workspaces inside modal: ", workspaces)
@@ -294,21 +246,7 @@ export default function CreateBoardModal({ modalPosition, workspaces, setWorkspa
         }`}
         disabled={createBoardTitle.length < 1 ? true : false}
         onClick={() => {
-          // const data = getUserData();
-          // // console.log("clicked createBoard", data)
-          // const {_id, accessToken} = data;
-          // setCreateNewBoardIsLoading(true);
-          // createBoard({
-          //   id: _id, 
-          //   workspaceId
-          // }, {
-          //   boardTitle: createBoardTitle,
-          //   bgColor: selectedBgColor,
-          //   workspaceName: selectedWorkspace
-          // }, accessToken)
-          // setCreateNewBoardIsLoading(false);
           handleCreateBoard();
-
         }}
       >
         {createNewBoardIsLoading ?  <PulseLoader color="#fff" size={10} /> : "Create"}

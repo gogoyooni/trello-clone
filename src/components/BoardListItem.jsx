@@ -16,7 +16,7 @@ const style = {
 
 
 
-export default function BoardListItem({ name, boardId, bgUrl, bgColor, workspaceName, workspaceIndex, ...props }) {
+export default function BoardListItem({ name, boardId, bgUrl, bgColor, workspaceName, workspaceId, ...props }) {
   // if (noBoard) {
   //   return;
   // }
