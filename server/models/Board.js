@@ -27,11 +27,14 @@ const boardSchema = new mongoose.Schema(
         title: {
           type: String,
         },
+        // id: {
+        //   type: Number
+        // },
         tasks: [
           {
-            taskId: {
-              type: mongoose.Schema.Types.ObjectId,
-            },
+            // taskId: {
+            //   type: mongoose.Schema.Types.ObjectId,
+            // },
             title: {
               type: String,
             },

@@ -34,7 +34,7 @@ const style = {
 //   );
 
 export default function BackgroundSelect() {
-  const [bgColor, setBgColor] = useState("");
+  const [bgColor, setBgColor] = useState("bg1");
   const [changedBg, setChangedBg] = useState({});
 
   const bgColors = {
@@ -107,6 +107,10 @@ export default function BackgroundSelect() {
   useEffect(() => {
     changeBg();
   }, [bgColor]);
+
+  useEffect(() => {
+    selectBgColor("bg1")
+  },[])
 
   //   console.log("changedBg", changedBg);
   return (

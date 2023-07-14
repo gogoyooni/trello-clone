@@ -44,7 +44,7 @@ const _createBoard = async (url, data, token) => {
 };
 
 // Get a workspace
-const _getWorkspace = async (url, data, token) => {
+const _addNewColumn = async (url, data, token) => {
   const config = {
     headers: {
       Authorization: `Bearer ${token}`,
@@ -52,7 +52,7 @@ const _getWorkspace = async (url, data, token) => {
   };
 
   return await axios
-    .get(`${BASE_URL}${url}`, data, config)
+    .post(`${BASE_URL}${url}`, data, config)
     .then((data) => {
       console.log(data);
       return data;
@@ -83,6 +83,7 @@ const _getWorkspaces = async (url, data, token) => {
 
 const boardService = {
   _createBoard,
+  _addNewColumn,
   
 };
 

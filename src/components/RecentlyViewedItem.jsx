@@ -9,6 +9,7 @@ export default function RecentlyViewedItem({
   url,
   bgUrl,
   bgColor,
+  userId,
   ...props
 }) {
   const [isHovered, setIsHovered] = useState(false);
@@ -99,7 +100,10 @@ export default function RecentlyViewedItem({
                 onClick={(e) => {
                   e.preventDefault();
                   handleSaveRecentlyVeiwed();
-                  navigate(`/b/${boardId}/${boardName}`);
+                  navigate(`/b/${boardId}/${boardName}`, {state : {
+                    userId,
+                    workspaceId
+                  }});
                 }}
               >
                 <div className="board-list-item-overlay__inner">

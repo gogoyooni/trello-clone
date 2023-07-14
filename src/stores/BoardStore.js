@@ -101,6 +101,12 @@ const useBoardStore = create((set, get) => ({
     // console.log("response from createBoard inside zustands state", response);
     return response;
   },
+  addNewColumn : async (ids, data, token) => {
+    const {id, workspaceId, boardId} = ids;
+    const response = await boardService._createBoard(`/api/user/${id}/workspaces/${workspaceId}/boards/${boardId}`, data, token);
+    // console.log("response from createBoard inside zustands state", response);
+    return response;
+  },
 
   workspaceName: "",
   website: "", // optional

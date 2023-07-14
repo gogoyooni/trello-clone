@@ -13,6 +13,7 @@ const style = {
 export default function UserWorkspacesBoards({
   data,
   showRemainingBoards,
+  userId,
   ...props
 }) {
   //   const content =
@@ -31,6 +32,7 @@ export default function UserWorkspacesBoards({
           data?.map((workspace, i) => (
             <UserWorkspaceBoard
               key={i}
+              userId={userId}
               workspace={workspace}
               showRemainingBoards={showRemainingBoards}
               {...props}

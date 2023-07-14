@@ -8,6 +8,8 @@
 }
 
 .all-boards-list__section {
+  display: flex;
+  flex-wrap: wrap;
   margin-bottom: 40px;
   margin-top: 15px;
 }

@@ -182,7 +182,7 @@ export default function CreateBoardModal({ modalPosition, workspaces, setWorkspa
 
     setWorkspaces((prevState) => {
       const newState = prevState?.map(workspace => {
-        if(workspace.name === selectedWorkspace){
+        if(workspace.name === selectedWorkspace){ 
           // return {...workspace, boards: response?.data.workspace.boards};
           return {...workspace, boards: [...workspace.boards, response?.data.workspace.boards[response?.data.workspace.boards.length - 1]]};
         }
@@ -194,7 +194,10 @@ export default function CreateBoardModal({ modalPosition, workspaces, setWorkspa
     closeCreateBoardModal();
 
     setTimeout(() => {
-      navigate(`/b/${boardId}/${boardName}`)
+      navigate(`/b/${boardId}/${boardName}`, {state: {
+        userId: _id,
+        workspaceId,
+      } })
     }, 1000)
 
   };

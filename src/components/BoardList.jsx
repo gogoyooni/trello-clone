@@ -19,6 +19,7 @@ export default function BoardList({
   recentlyViewed,
   workspaceName,
   workspaceId,
+  userId,
   // createBoardIsClicked,
   // setCreateBoardIsClicked,
   ...props
@@ -69,10 +70,12 @@ export default function BoardList({
           {recentlyViewedBoards?.map((board, i) => (
             <BoardListItem
               workspaceName={workspaceName}
+              workspaceId={workspaceId}
               key={i}
               boardId={board._id}
               bgColor={board.bgColor}
               bgUrl={board.bgUrl}
+              
               {...props}
               // img={board.img}
             />
@@ -207,6 +210,7 @@ export default function BoardList({
             key={i}
             workspaceName={workspaceName}
             workspaceId={workspaceId}
+            userId={userId}
             name={board.name}
             boardId={board._id}
             bgColor={board.bgColor}

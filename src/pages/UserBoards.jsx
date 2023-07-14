@@ -186,6 +186,7 @@ export default function UserBoards() {
       <RecentlyViewedContainer>
         <RecentlyViewedHeader />
         <RecentlyViewedList
+          userId={userId}
           recentlyViewedBoards={recentlyViewedBoards && recentlyViewedBoards}
         />
       </RecentlyViewedContainer>
@@ -200,6 +201,7 @@ export default function UserBoards() {
       ) : (
         <UserWorkspacesBoards
           data={workspaces}
+          userId={userId}
           showRemainingBoards={showRemainingBoards}
           saveRecentlyViewed={saveRecentlyViewed}
           checkLocalStorage={checkLocalStorage}

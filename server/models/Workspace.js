@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const Column = require("./Column");
 // const Board = require("./Board");
 
 const workspaceSchema = new mongoose.Schema({
@@ -29,7 +30,8 @@ const workspaceSchema = new mongoose.Schema({
       },
       bgColor: {
         type: String
-      }
+      }, 
+      data: [Column.schema]
     }
   ],
   team: [

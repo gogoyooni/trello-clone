@@ -1,4 +1,5 @@
 import React, { useState, useRef, useCallback, useMemo } from "react";
+import { useOutletContext, useLocation } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
 import { useParams } from "react-router-dom";
 import CardList from "../components/CardList";
@@ -6,6 +7,9 @@ import "./Board.css";
 import AddCardList from "../components/AddCardList";
 import defaultData from "../data";
 import { HiOutlineEllipsisHorizontal } from "react-icons/hi2";
+import boardService from "../features/workspace/boardService";
+import useUserStore from "../store";
+import useBoardStore from "../stores/BoardStore";
 // 간략한 데이터 형태
 // var cardList = [
 
@@ -27,6 +31,23 @@ export default function Board() {
   const [isCardListAdded, setIsCardListAdded] = useState(false);
   // const [cardList, setCardList] = useState(defaultData);
   const [data, setData] = useState(defaultData);
+
+  const { boardId } = useParams();
+  // console.log("boardId, ", boardId);
+  const [ workspaces, setWorkspaces ]  = useOutletContext();
+  const {userId, workspaceId} = useLocation().state;
+  // 이전 페이지에서 useNavigate의 State로 넘긴 데이터 가져오기
+  // console.log("state from useLocation: ", userId, workspaceId)
+  // const {userId, workspaceId} = location.state;
+  // console.log("userId: ", userId, "workspaceId: ", workspaceId);
+
+  const getUserData = useUserStore((state)=>state.checkLocalStorage);
+  
+  console.log("workspaces inside Board", workspaces);
+  
+  const addNewColumn = useBoardStore((state) => state.addNewColumn);
+
+
   const dragOverColumnRef = useRef();
   const startColumnRef = useRef();
   const currentColumnRef = useRef();
@@ -149,7 +170,7 @@ export default function Board() {
   // const [isAddCardClicked, setIsAddCardClicked] = useState(false);
   const cardInputRef = useRef();
 
-  const findTaskAddData = useCallback(
+  const findTaskAddData = useCallback( // 여기서 http request 보내야함
     (data) => {
       setData((prevData) => {
         return [...data];
@@ -735,7 +756,7 @@ export default function Board() {
     console.log("클릭");
   };
 
-  const addCardList = (cardListTitle, columnIndex) => {
+  const addCardList = async (cardListTitle, columnIndex) => { //여기서도 http request보내야할곳
     /*
       addCardList
       인풋값을 받은후에
@@ -763,6 +784,19 @@ export default function Board() {
       // console.log("글자 나오고있지?", e.target.value);
 
       copiedData[columnIndex] = updatedColumn;
+
+      const {accessToken} = getUserData();
+      const response = await addNewColumn({
+        id: userId, 
+        workspaceId,
+        boardId
+      },  {
+        column: data.length + 1,
+        title: cardListTitle,
+      }, accessToken);
+
+      console.log("response of addCardList :", response);
+
       setData(copiedData);
 
       // setData(copiedData);
@@ -876,6 +910,7 @@ export default function Board() {
           addCardList={addCardList}
           makeColumnTitle={makeColumnTitle}
           makeColumnTitleOnly={makeColumnTitleOnly}
+          // workspaceId={}
           // columnIndex={columnIndex}
           data={data}
         />

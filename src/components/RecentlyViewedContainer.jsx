@@ -7,7 +7,8 @@ import React from "react";
 export default function RecentlyViewedContainer({ children }) {
   return (
     <div
-      className="recently-viewed-boards__section all-boards-list__section"
+      // className="recently-viewed-boards__section all-boards-list__section"
+      className="recently-viewed-boards__container"
       //   style={recentlyViewedStyle}
     >
       <>{children}</>

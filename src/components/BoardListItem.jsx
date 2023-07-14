@@ -16,7 +16,7 @@ const style = {
 
 
 
-export default function BoardListItem({ name, boardId, bgUrl, bgColor, workspaceName, workspaceId, ...props }) {
+export default function BoardListItem({ name, boardId, bgUrl, bgColor, workspaceName, workspaceId, userId,...props }) {
   // if (noBoard) {
   //   return;
   // }
@@ -52,7 +52,8 @@ export default function BoardListItem({ name, boardId, bgUrl, bgColor, workspace
   // });
   // console.log("match:::::", match);
 
-  console.log("boardId", boardId);
+  const updateRecentlyViewed = useUserStore((state) => state.updateRecentlyViewed);
+  // console.log("boardId", boardId);
   //@desc hover event for board list item
 
   const handleHoverOnBoardItem = useCallback(
@@ -66,7 +67,7 @@ export default function BoardListItem({ name, boardId, bgUrl, bgColor, workspace
   const handleStarAnimation = useCallback(
     (e) => {
       e.stopPropagation();
-      console.log("star clicked");
+      // console.log("star clicked");
       setStarIsClicked((prevState) => !prevState);
     },
     [starIsClicked]
@@ -80,7 +81,14 @@ export default function BoardListItem({ name, boardId, bgUrl, bgColor, workspace
       // when it doesn't exist
       saveRecentlyViewed(boardId, name, bgUrl, bgColor);
       // console.log("check local storage ::", checkLocalStorage());
+    } else {
+          // 유저가 들어갔던 보드가 있으면 기존에 있던 localStorage에 데이터 추가
+      updateRecentlyViewed(boardId, name, bgUrl, bgColor);
     }
+    
+    
+
+
     // console.log("dataIsExisted", dataIsExisted);
   }, [boardId, name, bgUrl, bgColor]);
 
@@ -118,7 +126,10 @@ export default function BoardListItem({ name, boardId, bgUrl, bgColor, workspace
                 onClick={(e) => {
                   e.preventDefault();
                   handleSaveRecentlyViewed();
-                  navigate(`/b/${boardId}/${name}`);
+                  navigate(`/b/${boardId}/${name}`, {state :{
+                    userId,
+                    workspaceId
+                  }});
                 }}
               >
                 <div className="board-list-item-overlay__inner">

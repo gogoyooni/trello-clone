@@ -232,7 +232,7 @@ const useUserStore = create(
       //   const userIndex = users.findIndex((user) => user.username === username);
 
       // },
-      pushRecentlyViewed: (boardId, boardName, username) => {
+      updateRecentlyViewed: (boardId, boardName, bgUrl, bgColor) => {
         // const user = JSON.parse(localStorage.getItem("user"));
         // const boardUrl = `/b/${boardId}/${boardName}`;
 
@@ -245,22 +245,42 @@ const useUserStore = create(
 
         // sessionstorage에 유저의 _id로 key 값으로 만들고 거기에 recentlyViewed에 대한 링크 array에 저장한다.
 
-        const users = JSON.parse(localStorage.getItem("users"));
-        const userIndex = users.findIndex((user) => user.username === username);
+        const user = JSON.parse(localStorage.getItem(`${get()._id}`));
+        // const userIndex = users.findIndex((user) => user.username === username);
 
-        const boardUrl = `/b/${boardId}/${boardName}`;
-
+        // const boardUrl = `/b/${boardId}/${boardName}`;
+        
+        
         // 최근에 접속햇던 보드 데이터 localStorage에 저장
-        users[userIndex].recentlyVeiwed.unshift(boardUrl);
-        const dataToSave = JSON.stringify(users);
-        localStorage.setItem("users", dataToSave);
+        const checkBoard = (board) => (board.boardId === boardId);
+        // 최근 접속한 보드 중 똑같은 것이 없으면
+        if(user.length < 4 && !user.some(checkBoard)){
+          user.unshift({
+            boardId,
+            boardName,
+            url: `/b/${boardId}/${boardName}`,
+            bgUrl: bgUrl,
+            bgColor: bgColor
+          });
+        } else if(user.length >= 4 && !user.some(checkBoard) ){
+          user.unshift({
+            boardId,
+            boardName,
+            url: `/b/${boardId}/${boardName}`,
+            bgUrl: bgUrl,
+            bgColor: bgColor
+          });
+          user.pop();
+        }
+        localStorage.setItem(get()._id, JSON.stringify(user));
       },
       // checkLocalStorage: (userId) => {
       //   return localStorage.getItem(userId);
       // },
       checkLocalStorage: () => {
-        return JSON.parse(localStorage.getItem("user"));
+        return JSON.parse(localStorage.getItem(`${get()._id}`)) && JSON.parse(localStorage.getItem("user"))  ;
       },
+      
       saveRecentlyViewed: (boardId, boardName, bgUrl, bgColor) => {
         let data = [];
         data.unshift({
